@@ -1,0 +1,14 @@
+# Python
+env/
+*.pyc
+__pycache__/
+*.sqlite3
+.env
+
+# Node.js
+node_modules/
+build/
+
+# OS-specific
+.DS_Store
+Thumbs.db

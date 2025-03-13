@@ -39,7 +39,7 @@ Refer to initial-setup.txt for further setup instructions or additional configur
 ## Contact
 
 For questions or contributions, please contact: 
+- David Ni: davidn4@umbc.edu
+- Julia Ciattei: jcia1@umbc.edu
+- Avi Donaty: adonaty1@umbc.edu
 - Chris Dollo: cdollo1@umbc.edu
-- David:
-- Julia:
-- Avi: 

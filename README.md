@@ -10,7 +10,7 @@ A modern web browser (e.g., Chrome, Firefox, or Edge)
 
 Clone the Git repository: Run the following command in your terminal:
 
-git clone <repository_url>
+git clone https://github.com/avidonaty1/CMSC447-Proj.git
 
 Navigate to the project directory:
 

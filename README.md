@@ -22,11 +22,11 @@ cd CMSC447-Proj
 - Open the HTML file: Double-click on index.html or right-click and select Open with to choose your browser.
 
 
-### Customization
+## Customization
 
 To modify the styling, edit style.css.
 
-### Troubleshooting
+## Troubleshooting
 
 If the page does not load properly, ensure that the file paths are correct.
 Clear the browser cache if style updates are not reflecting.

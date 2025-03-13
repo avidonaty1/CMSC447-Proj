@@ -17,6 +17,7 @@ git clone https://github.com/avidonaty1/CMSC447-Proj.git
 
 ```sh
 cd CMSC447-Proj
+cd Frontend
 ```
 
 - Open the HTML file: Double-click on index.html or right-click and select Open with to choose your browser.

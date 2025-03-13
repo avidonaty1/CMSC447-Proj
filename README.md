@@ -40,3 +40,6 @@ Refer to initial-setup.txt for further setup instructions or additional configur
 
 For questions or contributions, please contact: 
 - Chris Dollo: cdollo1@umbc.edu
+- David:
+- Julia:
+- Avi: 

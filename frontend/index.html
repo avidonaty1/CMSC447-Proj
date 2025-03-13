@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Tiny Page</title>
+    <title>Static Webpage</title>
     <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL,GRAD@24,400,0,0" /> -->
+
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=add_circle"/> -->
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap">
+
 </head>
 <body>
 
     <img src="/frontend/Images/UMBC-primary-logo-RGB.png" alt="UMBC Logo" class="umbc-logo-img" width="500">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae eos officia laboriosam odit cum officiis molestias non, a aut, saepe neque doloribus soluta? Atque magnam obcaecati itaque error aspernatur omnis? 
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga facere aperiam iste quam nostrum rerum corporis unde facilis? Omnis quibusdam nostrum eligendi dolore corporis excepturi ullam eveniet cum maiores veniam!
+    <p>This is the UMBC interactive 4 year plan maker. To customize your plan look up classes on the left side and drag and drop them in one of <br> the terms in the scheduler section on the right. 
+        This can be used to customize one major, minor or certificate requirements.
     </p>
 
     <div class="plan-page">
@@ -20,29 +27,64 @@
 
         <div class="schedule-maker-container">
             <div class="classes-section">
-                hello world
+
+                <form class = "search-bar">
+                    <div class="search">
+                        <span class="search-icon material-symbols-outlined">search</span>
+                        <input type="search" class="search-input" placeholder="Search">
+                    </div>
+                </form>
+
+                <h3 class="course-type-title">CMSC Reqired Courses</h3>
+
+                <div class="course-container">
+                    <div class="course">CMSC 447</div>
+                    <div class="course">CMSC 421</div>
+                    <div class="course">CMSC 441</div>
+                </div>
+
+                <h3 class="course-type-title">Social Sciences</h3>
+
+                <div class="course-container">
+                    <div class="course">PHIL 100 </div>
+                    <div class="course">GES 102</div>
+                    <div class="course">PSYC 101</div>
+                    <div class="course">ANCS 201</div>
+                    <div class="course">AGING 300</div>
+                    <div class="course">AGING 301</div>
+                </div>
+                
+                    <!-- <div class="course">CMSC 236</div>
+                    <div class="course">CMSC 349</div>
+                    <div class="course">CMSC 098</div>
+                    <div class="course">CMSC 123</div> -->
+        
+                
+                
             </div>
             <div class="scheduler-section">
                 <h2 class="section2-title">Scheduler</h2>
 
                 <div class="four-year-plan">
-    
+
+                    <div class="year">
+
                         <div class="semester-courses-plan-container fall">
                             <table>
                                 <tr>
-                                    <th>fall 2026</th>
+                                    <th>FALL 2026</th>
                                 </tr>
                                 <tr>
-                                    <td>Operating Systems</td>
+                                    <td>CMSC 201</td>
                                 </tr>
                                 <tr>
-                                    <td>Data Structures</td>
+                                    <td>MATH 151</td>
                                 </tr>
                                 <tr>
-                                    <td>Computer Networks</td>
+                                    <td>ENG 100</td>
                                 </tr>
                                 <tr>
-                                    <td>Database Management</td>
+                                    <td>AGING 101</td>
                                 </tr>
                             </table>
                         </div>
@@ -50,91 +92,80 @@
                         <div class="semester-courses-plan-container spring">
                             <table>
                                 <tr>
-                                    <th>fall 2026</th>
+                                    <th>SPRING 2027</th>
                                 </tr>
                                 <tr>
-                                    <td>Operating Systems</td>
+                                    <td>CMSC 202</td>
                                 </tr>
                                 <tr>
-                                    <td>Data Structures</td>
+                                    <td>CMSC 203</td>
                                 </tr>
                                 <tr>
-                                    <td>Computer Networks</td>
+                                    <td>MATH 152</td>
                                 </tr>
                                 <tr>
-                                    <td>Database Management</td>
+                                    <td>PHYS 121</td>
                                 </tr>
                             </table>
                         </div>
 
-                        <!-- <button class="add-sumer-winter-session"></button> -->
+                        <button type="button" class="add-class-button">
+                            <span class="material-symbols-outlined">
+                                add_circle
+                            </span>
+                        </button>
 
-                        <div class="semester-courses-plan-container spring">
-                            <table>
-                                <tr>
-                                    <th>fall 2026</th>
-                                </tr>
-                                <tr>
-                                    <td>Operating Systems</td>
-                                </tr>
-                                <tr>
-                                    <td>Data Structures</td>
-                                </tr>
-                                <tr>
-                                    <td>Computer Networks</td>
-                                </tr>
-                                <tr>
-                                    <td>Database Management</td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <div class="semester-courses-plan-container spring">
-                            <table>
-                                <tr>
-                                    <th>fall 2026</th>
-                                </tr>
-                                <tr>
-                                    <td>Operating Systems</td>
-                                </tr>
-                                <tr>
-                                    <td>Data Structures</td>
-                                </tr>
-                                <tr>
-                                    <td>Computer Networks</td>
-                                </tr>
-                                <tr>
-                                    <td>Database Management</td>
-                                </tr>
-                            </table>
-                        </div>
-
-
-                        <!-- <div class="semester-courses-plan-container fall">
-                            <table>
-                                <tr>
-                                    <th>fall 2026</th>
-                                </tr>
-                                <tr>
-                                    <td>Operating Systems</td>
-                                </tr>
-                                <tr>
-                                    <td>Data Structures</td>
-                                </tr>
-                                <tr>
-                                    <td>Computer Networks</td>
-                                </tr>
-                                <tr>
-                                    <td>Database Management</td>
-                                </tr>
-                            </table>
-                        </div> -->
-    
                     </div>
-    
-                    
-                
 
+                    <div class="year">
+
+                        <div class="semester-courses-plan-container fall">
+                            <table>
+                                <tr>
+                                    <th>FALL 2027</th>
+                                </tr>
+                                <tr>
+                                    <td>CMSC 341</td>
+                                </tr>
+                                <tr>
+                                    <td>PHYS 122</td>
+                                </tr>
+                                <tr>
+                                    <td>CMSC 331</td>
+                                </tr>
+                                <tr>
+                                    <td>THEATER 101</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="semester-courses-plan-container spring">
+                            <table>
+                                <tr>
+                                    <th>SPRING 2028</th>
+                                </tr>
+                                <tr>
+                                    <td>MATH 221</td>
+                                </tr>
+                                <tr>
+                                    <td>CMSC 304</td>
+                                </tr>
+                                <tr>
+                                    <td>CMSC 313</td>
+                                </tr>
+                                <tr>
+                                    <td>CMSC 411</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <button type="button" class="add-class-button">
+                            <span class="material-symbols-outlined">
+                                add_circle
+                            </span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -33,10 +33,12 @@ p {
 }
 
 .classes-section{
-    /* background-color: green; */
+    background-color: rgb(240, 147, 33);
     border: 1px solid black;
     border-radius: 30px;
     width: 50%;
+
+    gap: 10px;
 }
 
 .scheduler-section{
@@ -91,3 +93,100 @@ th {
 tr:hover {
     background-color: #e9ecef;
 }
+
+
+.search{
+    --padding:14px;
+
+
+    width: max-content;
+    display: flex;
+    padding: var(--padding);
+    border-radius: 28px;
+    background: white;
+
+    margin: 15px auto;
+    border: 2px solid gray;
+}
+
+.search:hover{
+    border: 2px solid black;
+}
+
+.search-input{
+    font-size: 16px;
+    color: #000;
+    margin-left: var(--padding);
+
+    outline: none;
+    border: none;
+    background: transparent;
+
+    width: 300px;
+}
+
+.search-bar{
+    width: 100%;
+    margin: 0 auto;
+}
+
+.course{
+    background-color: white;
+    color: black;
+    font-weight: 700;
+    cursor: grab;
+
+    transform: translateY(-50%);
+    /* box-shadow: black 1px 1px; */
+    border: 2px solid black;
+    height: 30px;
+    line-height: 30px;
+    width: 100px;
+    align-items: center;
+    margin: auto 0;
+
+    border-radius: 5px;
+}
+
+.course-type-title{
+    color: white;
+    font-size: 24px;
+}
+
+.course-container{
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.year{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.add-class-button{
+    width: 40px;
+    height: 40px;
+    border-radius: 25px;
+    background-color: transparent;
+    border: 1px solid black;
+    /* border: none; */
+
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.add-class-button:hover{
+    border: 2px solid black;
+    box-shadow: 0 0 0.1px 0.1px rgb(197, 197, 197);
+}
+
+.add-class-button:active{
+    /* border: 2px solid red; */
+    box-shadow: none;
+    border: 1px solid black;
+}
+

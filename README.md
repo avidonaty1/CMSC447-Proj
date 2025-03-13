@@ -8,27 +8,23 @@ A modern web browser (e.g., Chrome, Firefox, or Edge)
 
 ## Running the Webpage
 
-Clone the Git repository: Run the following command in your terminal:
-
+- First clone the git repository by running this command
+```sh
 git clone https://github.com/avidonaty1/CMSC447-Proj.git
+```
 
-Navigate to the project directory:
+- Navigate to the project directory:
 
+```sh
 cd CMSC447-Proj
+```
 
-Open the HTML file: Double-click on index.html or right-click and select Open with to choose your browser.
+- Open the HTML file: Double-click on index.html or right-click and select Open with to choose your browser.
 
-Interacting with the interface:
 
-Use the search bar to find classes.
-
-Drag class blocks to the scheduler to plan your 4-year schedule.
-
-Customization
+## Customization
 
 To modify the styling, edit style.css.
-
-To enhance functionality or add interactivity, you can include JavaScript.
 
 Troubleshooting
 
@@ -45,4 +41,3 @@ Contact
 
 For questions or contributions, please contact: 
 - Chris Dollo: cdollo1@umbc.edu
-- 

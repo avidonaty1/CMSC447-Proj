@@ -6,15 +6,6 @@ This project is an early-stage implementation of an interactive 4-year planner f
 
 A modern web browser (e.g., Chrome, Firefox, or Edge)
 
-
-File Structure
-
-CMSC447-Proj/
-│
-├── index.html
-├── style.css
-├── initial-setup.txt
-
 ## Running the Webpage
 
 Clone the Git repository: Run the following command in your terminal:

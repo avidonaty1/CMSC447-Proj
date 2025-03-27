@@ -5,24 +5,32 @@ Read initial-setup.txt
 
 before you start ensure you have Node.js and npm (Node Package Manager installed on your machine. You can check by running:
 
-sh´´´
+```bash
 node -v
 npm -v
-´´´
+```
+
 if you don't have them you can download them here: https://nodejs.org/en
 
-then install vite
+Then install vite
 
-sh´´´
+```bash
 npm install vite --save-dev
-´´´
+```
+
+navigate to the react folder
+
+```bash
+cd frontend
+cd my-react-app
+```
 
 
 to run
 
-sh´´´
+```bash
 npm run dev
-´´´
+```
 
 
 use the link provded tp run. it will look something like:
@@ -30,17 +38,3 @@ http://localhost:5173/
 
 
 
-
-
-
-
-Copy
-Edit
-
-To run 
-
-'''sh
-cd frontend
-cd my-react-app
-
-'''

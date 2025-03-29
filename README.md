@@ -1,5 +1,43 @@
 # CMSC447-Proj: Interactive 4-Year Plan Project
 
+Read initial-setup.txt
+
+before you start ensure you have Node.js and npm (Node Package Manager installed on your machine. You can check by running:
+
+```bash
+node -v
+npm -v
+```
+
+if you don't have them you can download them here: https://nodejs.org/en
+
+Then install vite
+
+```bash
+npm install vite --save-dev
+```
+
+navigate to the react folder
+
+```bash
+cd frontend
+cd my-react-app
+```
+
+
+to run
+
+```bash
+npm run dev
+```
+
+
+use the link provded tp run. it will look something like:
+http://localhost:5173/ 
+
+
+
+=======
 This project is an early-stage implementation of an interactive 4-year planner for students, allowing them to drag and drop classes into a scheduler. The static webpage consists of an index.html file and a style.css file. The interface includes a search bar, blocks holding the names of classes on one side, and a scheduler on the other side.
 
 ## Prerequisites
@@ -44,3 +82,4 @@ For questions or contributions, please contact:
 - Julia Ciattei: jcia1@umbc.edu
 - Avi Donaty: adonaty1@umbc.edu
 - Chris Dollo: cdollo1@umbc.edu
+

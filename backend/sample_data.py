@@ -1,8 +1,6 @@
-TITLE = "Simple Planner"
-
 # Define the majors collection
 # This is a list of dictionaries, where each major is a dictionary
-# with an id, name, credit count
+# with an id, name, number_credits
 majors = [
     {
         "_id": 1,

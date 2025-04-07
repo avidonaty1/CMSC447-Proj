@@ -1,40 +1,24 @@
-function Session(){
-    return(
+function Session({semester, session_title, courses}){
 
+    console.log(semester)
+
+    return(
         <>
             <div className="session">
-                <div className="session-name">Term + Year</div>
+                <div className="session-name">{session_title}</div>
                 <div className="session-courses">
-                    <div className="course">COURSE course-title cred_num</div>
-                    <div className="course">COURSE course title cred_num</div>
-                    <div className="course">COURSE course title cred_num</div>
-                    <div className="course">COURSE course title cred_num</div>
+                {courses.length === 0 ? (
+                    <div className="no-courses-added">No courses were added to this session.</div>
+                    ) : (
+                    courses.map((course, index) => (
+                        <div key={index} className="course">
+                        {course}
+                        </div>
+                    ))
+                    )}
                 </div>
             </div>
         </>
-
-        
-
-        
-        
-
-        
-
-        // <table class="session">
-        //     <thead>
-        //         <tr>
-        //             <th>Semester - Year</th>
-        //         </tr>
-        //     </thead>
-        //     <tbody>
-        //         <tr class ="course" ><td>XXXX XXXX xxxxxxxxxxxxxxxxxxxxx</td></tr>
-        //         <tr><td>CMSC 201 Introduction to computer</td></tr>
-        //         <tr><td>XXXX XXXX xxxxxxxxxxxxxxxxxxxxx</td></tr>
-        //         <tr><td>XXXX XXXX xxxxxxxxxxxxxxxxxxxxx</td></tr>
-        //         <tr><td>XXXX XXXX xxxxxxxxxxxxxxxxxxxxx</td></tr>
-        //     </tbody>
-        // </table>
-
     )
 }
 

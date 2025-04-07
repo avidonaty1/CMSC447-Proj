@@ -1,48 +1,46 @@
-import { useState } from "react"
-import Select from "react-select"
+import { useState, useEffect } from "react";
+import Select from "react-select";
+import axios from "axios";
 
+function SearchMajor({selectedMajor, setSelectedMajor}) {
+  const [majors, setMajors] = useState([]);
+//   const [selectedMajor, setSelectedMajor] = useState(null); // Use this internally
 
+  useEffect(() => {
+    axios
+      .get('http://127.0.0.1:5000/api/majors')
+      .then((response) => {
+        const majorOptions = response.data.map(major => ({
+          value: major._id,
+          label: major.name,
+        }));
+        setMajors(majorOptions);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the majors:", error);
+      });
+  }, []);
 
-function searchMajor(){
+  const handleChange = (selectedOption) => {
+    setSelectedMajor(selectedOption); // No more props involved
+  };
 
-    const options = [
-        {value: "Computer Science", label: "Computer Science"},
-        {value: "Computer Engineering", label: "Computer Engineering"},
-        {value: "Mathematics", label: "Mathematics"},
-        {value: "Random Major", label: "Random Major"},
-        {value: "Computer Science", label: "Computer Science"},
-        {value: "Computer Engineering", label: "Computer Engineering"},
-        {value: "Mathematics", label: "Mathematics"},
-        {value: "Random Major", label: "Random Major"},
-        {value: "Computer Science", label: "Computer Science"},
-        {value: "Computer Engineering", label: "Computer Engineering"},
-        {value: "Mathematics", label: "Mathematics"},
-        {value: "Random Major", label: "Random Major"},
-    ];
+  return (
+    <div className="selectMajor">
+      <label className="select-major-text" htmlFor="major">
+        Select a major:
+      </label>
 
-    const [selectedOptions, setSelectedOptions] = useState([]);
-
-    const handleChange = selected => {
-        setSelectedOptions(selected);
-        console.log("Selected options:", selected)
-    };
-
-
-    return (
-        <div class = "selectMajor">
-
-            <label class="select-major-text" for="major">Selected a major: </label>
-
-            <Select
-                classNamePrefix= "select-box"
-                options ={options}
-                isSearchable
-                value ={selectedOptions}
-                onChange={handleChange}
-                placeholder="Choose a major"
-            />
-        </div>
-    )
+      <Select
+        classNamePrefix="select-box"
+        options={majors}
+        value={selectedMajor}
+        isSearchable
+        onChange={handleChange}
+        placeholder="Choose a major"
+      />
+    </div>
+  );
 }
 
-export default searchMajor
+export default SearchMajor;

@@ -8,6 +8,7 @@ function Schedule(){
             <div class= "schedule-year">
                 <Session></Session>
                 <Session></Session>
+                
             </div>
             <div class= "schedule-year">
                 <Session></Session>
@@ -21,11 +22,7 @@ function Schedule(){
                 <Session></Session>
                 <Session></Session>
             </div>
-            {/* <div class= "schedule-year">
-                <Session></Session>
-                <Session></Session>
-                <Session></Session>
-            </div> */}
+        
         </div>
         
     )

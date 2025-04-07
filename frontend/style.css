@@ -4,6 +4,10 @@ body {
     padding: 20px;
 }
 
+html{
+    background-color: #FFF4D1;
+}
+
 h1 {
 
 
@@ -131,7 +135,9 @@ tr:hover {
 }
 
 .course{
-    background-color: white;
+    /* background-color: white; */
+    background-color: #FFF4D1;
+    
     color: black;
     font-weight: 700;
     cursor: grab;

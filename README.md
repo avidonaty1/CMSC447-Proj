@@ -1,14 +1,52 @@
 # CMSC447-Proj: Interactive 4-Year Plan Project
 
 
-before you start ensure you have Node.js and npm (Node Package Manager installed on your machine. You can check by running:
+# Backend Setup
+
+Navigate to the backend folder
+
+1. Run this command to install virtual environment for Python
+```bash
+pip install virtualenv
+```
+
+2. Run this command to create a virtual environment
+```bash
+virtualenv planner-env
+```
+
+3. Activate the virtual environment (Windows)
+```bash
+planner-env\Scripts\activate
+```
+
+OR Activate the virtual environment (mac/Linux)
+```bash
+source planner-env/bin/activate
+```
+
+4. Run this command to install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+5. Run this command to start the Flask server
+```bash
+python server.py
+```
+
+**Note that once everything is created/installed, you only need to do steps 3 and 5 to start the server**
+
+# Frontend Setup
+
+Before you start ensure you have Node.js and npm (Node Package Manager installed on your machine. You can check by running:
 
 ```bash
 node -v
 npm -v
 ```
 
-if you don't have them you can download them here: https://nodejs.org/en
+If you don't have them you can download them here: https://nodejs.org/en
 
 Then install vite
 
@@ -16,7 +54,8 @@ Then install vite
 npm install vite --save-dev
 ```
 
-navigate to the react folder
+
+Navigate to the react folder
 
 ```bash
 cd frontend
@@ -24,14 +63,14 @@ cd my-react-app
 ```
 
 
-to run
+# To run the whole website (assuming the Flask server is running)
 
 ```bash
 npm run dev
 ```
 
 
-use the link provded tp run. it will look something like:
+use the link provded to run. it will look something like:
 http://localhost:5173/ 
 
 

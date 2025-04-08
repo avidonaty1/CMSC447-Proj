@@ -9,7 +9,7 @@ CORS(app)
 majors = [
     {
         "_id": 1, 
-        "name": "Computer Science", 
+        "name": "Computer Science - B.S.", 
         "number_credits": 12,
         "plan": {
             "freshman": {
@@ -41,19 +41,34 @@ majors = [
 
     {
         "_id": 2, 
-        "name": "MECH E", 
+        "name": "Mechanical Engineering - B.S.", 
         "number_credits": 12,
         "plan": {
             "year_1": {
-                "fall": ["ENME h;", "ENME", "ENME", "Foreign Language 201"],
+                "fall": ["CHEM 101", "MATH 151", "ENES 101 Y/H", "ENGL GEP", "AH GEP"],
                 "winter": [],
-                "spring": ["ENME", "ENME e", "ENME v", "ENME", "ENME"],
+                "spring": ["CHEM 102", "CHEM 102L", "PHYS 121", "MATH 152", "ENME 110"],
                 "summer": [],
             },
+
             "year_2": {
-                    "fall": ["ENME 331", "ENME 341", "ENME", "ENME"],
+                    "fall": ["ENME 220", "STAT 355", "MATH 251", "PHYS 122"],
                     "winter": [],
-                    "spring": ["ENME 313", "ENME 221", "ENME", "ENME"],
+                    "spring": ["ENME 221", "MATH 225", "ENME 204", "ENME 217", "AH GEP"],
+                    "summer": [],
+                },
+
+            "year_3": {
+                    "fall": ["CMPE 306", "ENME 320", "ENME 303", "ENME 301", "SS GEP"],
+                    "winter": [],
+                    "spring": ["ENME 304", "ENME 321", "ENME 360", "ENME 332L", "Foreign Language 201"],
+                    "summer": [],
+                },
+            
+            "year_4": {
+                    "fall": ["ENME 403", "ENME 432L", "Science/Technical elective" ,"ENME 4XX", "SS GEP", "AH GEP"],
+                    "winter": [],
+                    "spring": ["ENME 482L", "ENME 444", "ENME 4XX", "ENME 332L", "SS GEP","C GEP"],
                     "summer": [],
                 }
         }

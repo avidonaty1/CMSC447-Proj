@@ -6,7 +6,7 @@ import Session from "./Session"
 import axios from "axios"
 import { useState, useEffect } from "react"
 
-function Schedule({plan}){
+function Schedule({ plan, onPlanChange }){
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -18,22 +18,65 @@ function Schedule({plan}){
     
     const handleDragEnd = (event) => {
         const { active, over } = event;
-        if (!over || active.id === over.id) return;
-    
-        const [sourceSemester, courseName] = active.id.split('|');
-        const destinationSemester = over.id;
-    
-        const updatedPlan = { ...plan };
-    
-        const courseIndex = updatedPlan[sourceSemester].indexOf(courseName);
-        if (courseIndex > -1) {
-        updatedPlan[sourceSemester].splice(courseIndex, 1);
+      
+        console.log("🎯 Drag Event Triggered");
+        console.log("Active (dragged):", active.id);
+        console.log("Over (dropped onto):", over?.id);
+      
+        if (!over || active.id === over.id) {
+          console.log("❌ Invalid drop or dropped onto self");
+          return;
         }
-    
-        updatedPlan[destinationSemester].push(courseName);
-    
+      
+        const [fromSemester, courseName] = active.id.split("::");
+        const toSemester = over.id;
+        const [fromYear, fromSeason] = fromSemester.split("-");
+        const [toYear, toSeason] = toSemester.split("-");
+      
+        console.log(`📦 Moving "${courseName}" from ${fromYear}-${fromSeason} ➡️ ${toYear}-${toSeason}`);
+      
+        // 🛠 Deep clone the entire plan to avoid mutation
+        const updatedPlan = JSON.parse(JSON.stringify(plan));
+      
+        if (
+          !updatedPlan[fromYear] ||
+          !updatedPlan[fromYear][fromSeason] ||
+          !updatedPlan[toYear] ||
+          !updatedPlan[toYear][toSeason]
+        ) {
+          console.warn("⚠️ Structure mismatch or missing semesters.");
+          return;
+        }
+      
+        const fromCourses = updatedPlan[fromYear][fromSeason];
+        const toCourses = updatedPlan[toYear][toSeason];
+      
+        console.log("Before move:");
+        console.log("📍 From courses:", fromCourses);
+        console.log("📍 To courses:", toCourses);
+      
+        const courseIndex = fromCourses.indexOf(courseName);
+        if (courseIndex === -1) {
+          console.warn("⚠️ Course not found in original semester.");
+          return;
+        }
+        fromCourses.splice(courseIndex, 1);
+      
+        if (!toCourses.includes(courseName)) {
+          toCourses.push(courseName);
+        }
+      
+        console.log("After move:");
+        console.log("✅ From courses:", fromCourses);
+        console.log("✅ To courses:", toCourses);
+      
         onPlanChange(updatedPlan);
-    };
+      };
+      
+      
+      
+      
+      
       
 
 
@@ -58,6 +101,7 @@ function Schedule({plan}){
 
                     {["fall", "winter", "spring", "summer"].map((season) => (
                         <Session
+                            key={`${year}-${season}-${sessions[season]?.join(',')}`}
                             semester={`${year}-${season}`}
                             session_title={season.toUpperCase()}
                             courses={sessions[season] || []}
@@ -65,8 +109,8 @@ function Schedule({plan}){
                     ))}
                     </div>
                 ))}
-
-                {/* {Object.entries(plan).map(([semesterKey, courses]) => (
+                {/* 
+                {Object.entries(plan).map(([semesterKey, courses]) => (
                     <Session
                         key={semesterKey}
                         semester={semesterKey}

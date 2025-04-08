@@ -34,7 +34,14 @@ function App() {
       <SearchMajor selectedMajor={selectedMajor} setSelectedMajor={setSelectedMajor} />
       
       <h2 className="title-of-scheduler"> Personal {selectedMajor?.label} 4 Year Plan</h2>
-      <Schedule plan = {majorDetails?.plan}/>
+      <Schedule 
+        plan = {majorDetails?.plan} 
+
+        onPlanChange={(newPlan) =>
+          setMajorDetails((prev) => ({ ...prev, plan: newPlan }))
+        }
+      
+      />
       {/* <Schedule /> */}
       <footer></footer>
     </>

@@ -36,6 +36,9 @@ npm run dev
 ```
 
 
+npm install react-beautiful-dnd
+
+
 use the link provded to run. it will look something like:
 http://localhost:5173/ 
 

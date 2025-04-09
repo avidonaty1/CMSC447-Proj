@@ -1,6 +1,5 @@
 from flask import Flask, send_from_directory
 from flask_restful import Api
-# from resources.title import Title
 from resources.majors import Majors
 
 app = Flask(__name__, static_folder="../my-react-app/dist", static_url_path="/")

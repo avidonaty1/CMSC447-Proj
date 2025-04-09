@@ -1,56 +1,40 @@
 # CMSC447-Proj: Interactive 4-Year Plan Project
 
+This website provides students with a tool to customize their graduation plan for a specific major.
 
-**Note that once everything is created/installed, you only need to do steps 3 and 5 to start the server**
+After the student selects a major from the dropdown, courses populate into the planner.
 
-# Frontend Setup
+Click on a course to view more information.
 
-Before you start ensure you have Node.js and npm (Node Package Manager installed on your machine. You can check by running:
+Drag and drop courses to move them to another semester or session.
 
-```bash
-node -v
-npm -v
+To run the website:
+
+1. Set up and run the Flask server
+
+2. Set up and run the React app
+
+3. Go to http://localhost:5173/ 
+
+## Prerequisites
+
+1. A modern web browser (e.g., Chrome, Firefox, or Edge)
+
+2. Ability to install and use git for the command line steps
+
+# Running the Webpage
+
+- First clone the git repository by running this command
+```sh
+git clone https://github.com/avidonaty1/CMSC447-Proj.git
+
 ```
-
-If you don't have them you can download them here: https://nodejs.org/en
-
-Then install vite
-
-```bash
-npm install vite --save-dev
-```
-
-
-Navigate to the react folder
-
-```bash
-cd frontend
-cd my-react-app
-```
-
-
-# To run the whole website (assuming the Flask server is running)
-
-```bash
-npm run dev
-```
-
-
-npm install react-beautiful-dnd
-
-
-use the link provded to run. it will look something like:
-http://localhost:5173/ 
-
-
-
-
-
-
 
 # Backend Setup
 
 Navigate to the backend folder
+
+**Note that once everything is created/installed, you only need to do steps 3 and 5 to start the server**
 
 1. Run this command to install virtual environment for Python
 ```bash
@@ -82,36 +66,44 @@ pip install -r requirements.txt
 python server.py
 ```
 
+# Frontend Setup
 
+**Note that once everything is created/installed, you only need to do steps 3, 4, and 5 to start the frontend**
 
+1. Before you start, ensure you have Node.js and npm (Node Package Manager) installed on your machine. You can check by running:
 
-
-This project is an early-stage implementation of an interactive 4-year planner for students, allowing them to drag and drop classes into a scheduler. The static webpage consists of an index.html file and a style.css file. The interface includes a search bar, blocks holding the names of classes on one side, and a scheduler on the other side.
-
-## Prerequisites
-
-A modern web browser (e.g., Chrome, Firefox, or Edge)
-
-## Running the Webpage
-
-- First clone the git repository by running this command
-```sh
-git clone https://github.com/avidonaty1/CMSC447-Proj.git
+```bash
+node -v
+npm -v
 ```
 
-- Navigate to the project directory:
+If you don't have them you can download them here: https://nodejs.org/en
 
-```sh
-cd CMSC447-Proj
+2. Then install dependencies 
+
+```bash
+npm install
+
+```
+
+3. Navigate to the react folder
+
+```bash
 cd frontend
+cd my-react-app
 ```
 
-- Open the HTML file: Double-click on index.html or right-click and select Open with to choose your browser.
+
+4. Start the frontend
+
+```bash
+npm run dev
+```
 
 
-## Customization
+5. Use the link provided to run. It will look something like:
+http://localhost:5173/ 
 
-To modify the styling, edit style.css.
 
 ## Troubleshooting
 

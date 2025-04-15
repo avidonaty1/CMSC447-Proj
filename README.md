@@ -68,7 +68,7 @@ python server.py
 
 # Frontend Setup
 
-**Note that once everything is created/installed, you only need to do steps 3, 4, and 5 to start the frontend**
+**Note that once everything is created/installed, you only need to do steps 2, 4, and 5 to start the frontend**
 
 1. Before you start, ensure you have Node.js and npm (Node Package Manager) installed on your machine. You can check by running:
 
@@ -79,20 +79,19 @@ npm -v
 
 If you don't have them you can download them here: https://nodejs.org/en
 
-2. Then install dependencies 
-
-```bash
-npm install
-
-```
-
-3. Navigate to the react folder
+2. Navigate to the react folder
 
 ```bash
 cd frontend
 cd my-react-app
 ```
 
+3. Then install dependencies 
+
+```bash
+npm install
+
+```
 
 4. Start the frontend
 
@@ -100,12 +99,13 @@ cd my-react-app
 npm run dev
 ```
 
-
 5. Use the link provided to run. It will look something like:
 http://localhost:5173/ 
 
 
 ## Troubleshooting
+
+You may need to run npm audit fix after running npm install.
 
 If the page does not load properly, ensure that the file paths are correct.
 Clear the browser cache if style updates are not reflecting.

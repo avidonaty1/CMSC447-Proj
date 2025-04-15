@@ -1,0 +1,25 @@
+.course{
+    height: 40px;
+    border: 1px solid black; 
+    width: 100%;
+    padding: 10px;
+    min-width: calc(8ch + 50px);
+    display: flex;
+    justify-content: center;  /* Centers horizontally */
+    align-items: center;  /* Centers vertically */
+  }
+
+  .course:nth-child(even){
+    background-color: white;
+  }
+  
+  .course:nth-child(odd){
+    background-color: rgb(228, 228, 228);
+  }
+
+  @media (max-width: 768px) {
+    .course {
+      width: calc(50% - 10px);
+      height: 40px;
+    }
+  }

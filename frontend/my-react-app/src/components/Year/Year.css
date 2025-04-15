@@ -1,0 +1,26 @@
+.schedule-year{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .schedule-sessions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* On a narrower screen, force a 2-column grid */
+  @media (max-width: 768px) {
+    .schedule-sessions {
+      display: grid;
+      grid-template-columns: repeat(2, calc(8ch + 60px));
+      gap: 10px;
+      width: 100%;
+      justify-content: center;
+    }
+  }

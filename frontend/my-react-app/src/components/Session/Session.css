@@ -1,0 +1,43 @@
+.session {
+  border: 2px solid black;
+  font-size: var(--schedule-text-size);
+  width: calc(25% - 10px);
+  min-width: calc(8ch + 20px);
+  min-height: 200px;
+  margin-bottom: 20px;
+}
+
+.no-courses-added {
+  font-style: italic;
+  margin: 10px;
+  color: #888;
+  text-align: center;
+}
+
+.session-name {
+  background-color: bisque;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  line-height: 38px;
+  font-weight: 600;
+}
+
+.session-courses {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Distribute items evenly */
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .session {
+    width: 100%;
+  }
+  .session-courses {
+    width: 100%;
+  }
+}
+
+

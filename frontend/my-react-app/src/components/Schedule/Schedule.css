@@ -1,0 +1,16 @@
+.schedule{
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+  }
+
+
+  /* For mobile devices, adjust padding and width if needed */
+  @media screen and (max-width: 600px) {
+    .schedule {
+      width: 100%;
+      padding: 10px;
+    }
+  }

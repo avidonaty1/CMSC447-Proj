@@ -45,7 +45,7 @@ majors = [
         "number_credits": 12,
         "plan": {
             "year_1": {
-                "fall": ["CHEM 101", "MATH 151", "ENES 101 Y/H", "ENGL GEP", "AH GEP"],
+                "fall": ["CHEM 101", "MATH 151", "ENES 101", "ENGL GEP", "AH GEP"],
                 "winter": [],
                 "spring": ["CHEM 102", "CHEM 102L", "PHYS 121", "MATH 152", "ENME 110"],
                 "summer": [],
@@ -85,8 +85,20 @@ courses = [
     {
         "name": "CMSC 201",
         "number_of_credits": 4,
-        "description": "Introduction to programming using Python. This is the first course for students interested in pursuing further study in computer science.",
-        "prerequisites": []
+        "description": "An introduction to computer science through problem solving and computer programming. Programming techniques covered by this course include modularity, abstraction, top-down design, specifications documentation, debugging and testing. The core material for this course includes control structures, functions, lists, strings, abstract data types, file I/O, and recursion.",
+        "prerequisites": ["MATH 150, MATH 151, MATH 152", "MATH 155"]
+    },
+    {
+        "name": "CMSC 447",
+        "number_of_credits": 3,
+        "description": "This course introduces the basic concepts of software engineering, including software life cycle, requirements analysis and software design methods. Professional ethics in computer science and the social impact of computing are discussed as an integral part of the software development process. Additional topics may include tools for software development, software testing, software metrics and software maintenance. ",
+        "prerequisites": ["CMSC 341", "CMSC 4XX"]
+    },
+    {
+        "name": "ENES 101",
+        "number_of_credits": 3,
+        "description": "This course is an introduction to engineering that covers “thinking like an engineer;” including professional practice, data analysis and curve fitting, estimation, engineering units and dimensional analysis, and the engineering design process. Students must work in teams on a design project, which includes design, construction, evaluation, testing, modeling and presentation. The course includes an introduction to computer programming in MATLAB and to engineering ethics.  ",
+        "prerequisites": ["MATH 150", "MATH 151 or MATH 152 with a grade of ‘C’ or better"]
     }
 ]
 

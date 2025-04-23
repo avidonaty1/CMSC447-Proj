@@ -1,3 +1,9 @@
+# For David's Mac: source .venv/bin/activate
+# For David's Mac: deactivate
+# (Check for Dependencies)
+#   python --version
+#   pip list
+
 # import libraries for mongoDB
 from pymongo import MongoClient
 import pymongo
@@ -23,8 +29,9 @@ def connectingToDatabase():
     Returns:
         _type_: Returns the client object
     """
-    uri = "mongodb://davidn4:upP7VRk03qb2DnKk@davidn4-shard-00-00.bcabt.mongodb.net:27017,davidn4-shard-00-01.bcabt.mongodb.net:27017,davidn4-shard-00-02.bcabt.mongodb.net:27017/?replicaSet=atlas-laj9s7-shard-0&ssl=true&authSource=admin&retryWrites=true&w=majority&appName=davidn4"
-    client = MongoClient(uri)
+    string = "mongodb://davidn4:<db_password>@davidn4-shard-00-00.bcabt.mongodb.net:27017,davidn4-shard-00-01.bcabt.mongodb.net:27017,davidn4-shard-00-02.bcabt.mongodb.net:27017/?replicaSet=atlas-laj9s7-shard-0&ssl=true&authSource=admin&retryWrites=true&w=majority&appName=davidn4"
+    string = string.replace("<db_password>", "upP7VRk03qb2DnKk")
+    client = MongoClient(string)
     return client
 
 def enterDatabase(name, client):
@@ -91,20 +98,102 @@ def insertCourseData(fileAddress, collection):
     df.columns = df.columns.str.replace('\n', ' ')
     # convert the rows into a list of dictionaries
     data = df.to_dict('records')
+    # ensure that each datapoint of prerequisites and corequisites is a list with , as the delimiter
+    for record in data:
+        if 'prerequisites' in record:
+            record['prerequisites'] = [x.strip() for x in record['prerequisites'].split(',')]
+        if 'corequisites' in record:
+            record['corequisites'] = [x.strip() for x in record['corequisites'].split(',')]
     # iterate through each record
     for record in data:
-        # Use the 'Course Number' as the unique identifier
-        if 'Course Number' in record:
+        # Use the 'number' as the unique identifier
+        if 'number' in record:
             collection.update_one(
-                {"Course Number": record["Course Number"]}, # Match by 'Course Number'
+                {"number": record["number"]}, # Match by 'number'
                 {"$set": record},        # Update the document with the new data
                 upsert=True              # Insert if it doesn't exist
             )
         else:
-            # Insert the record if it doesn't have an 'Course Number' field
+            # Insert the record if it doesn't have an 'number' field
+            collection.insert_one(record)
+    print("Data inserted/updated successfully!")
+
+def insertMajorData(fileAddress, collection): # （INCOMPLETE)
+    """_summary_ Insert major data into the major collection
+
+    Args:
+        fileAddress (_string_): address of the file
+        collection (_collection_): collection object in the database
+    """
+    # read each sheet of the excel file
+    sheets = pd.read_excel(fileAddress, sheet_name=None)
+    # iterate through each sheet and extract the data
+    for sheet_name, df in sheets.items():
+        # making sure '\n' is removed from the column names
+        df.columns = df.columns.str.replace('\n', ' ')
+        # drop rows with NaN values in either of the first two columns
+        filtered_df = df.dropna(subset=[df.columns[0], df.columns[1]])
+        # create a dictionary using the first column as keys and the second column as values
+        dict_elements = dict(zip(filtered_df.iloc[:, 0], filtered_df.iloc[:, 1]))
+        # for "required_courses", drop NaN values and convert the column to a single list
+        required_courses_array = df['required_courses'].dropna().astype(str).str.strip().tolist()        
+        # convert last columns to a nested dictionary
+        filtered_df = df.dropna(subset=['default_plan', 'year', 'session'])
+        nested_dict = filtered_df.set_index('default_plan')[['year', 'session']].to_dict(orient='index')
+        
+        # use 'Mechanical Engineering' as the unique identifier
+        if 'Mechanical Engineering' in dict_elements:
+            # Update the document with the new data
+            collection.update_one(
+                {"name": dict_elements["name"]}, # Match by 'Mechanical Engineering'
+                {"$set": {
+                    "number_credits": dict_elements["number_credits"],
+                    "required_courses": required_courses_array,
+                    "default_plan": nested_dict
+                }},
+                upsert=True              # Insert if it doesn't exist
+            )
+        else:
+            # Insert the record if it doesn't have an 'Mechanical Engineering' field
+            collection.insert_one({
+                "name": dict_elements["name"],
+                "number_credits": dict_elements["number_credits"],
+                "required_courses": required_courses_array,
+                "default_plan": nested_dict
+            })
+    print("Data inserted/updated successfully!")
+        
+        
+    
+def insertStudentData(fileAddress, collection):
+    """_summary_ Insert student data into the student collection
+
+    Args:
+        fileAddress (_string_): address of the file
+        collection (_collection_): collection object in the database
+    """
+    # read the excel file
+    df = pd.read_excel(fileAddress)
+    # making sure '\n' is removed from the column names
+    df.columns = df.columns.str.replace('\n', ' ')
+    # convert the rows into a list of dictionaries
+    data = df.to_dict('records')
+    # iterate through each record
+    for record in data:
+        # Use the 'Campus ID' as the unique identifier
+        if 'campus_id' in record:
+            collection.update_one(
+                {"campus_id": record["campus_id"]}, # Match by 'Campus ID'
+                {"$set": record},        # Update the document with the new data
+                upsert=True              # Insert if it doesn't exist
+            )
+        else:
+            # Insert the record if it doesn't have an 'Campus ID' field
             collection.insert_one(record)
     print("Data inserted/updated successfully!")
     
+
+# [FETCHING DATA FROM DATABASE] ========================================
     
 # [DEBUGGING] ========================================
 def isDatabaseOnline(db):
@@ -125,7 +214,21 @@ def isDatabaseOnline(db):
         print("Database is offline. Error:", e)
         return False
 
-    
+def printCollection(collection):
+    """_summary_ Print the collection from mongoDB
+
+    Args:
+        collection (_collection_): collection object in the database
+    """
+    # Pulling collection from mongoDB
+    cursor = collection.find()
+    # Printing the collection
+    for document in cursor:
+        print(document)
+        # Print a new line
+        print("\n")
+
+
 # [MAIN] ========================================
 if __name__ == "__main__":
     # Open the database
@@ -138,17 +241,32 @@ if __name__ == "__main__":
         print("Python: Failed to access the database.")
     else:
         print("Python: Database is accessible.")
-        
+
         # Open the collections
         course = openCourseDB(db)
         student = openStudentDB(db)
         major = openMajorDB(db)
         
+        """
         # Insert course data
         print("Python: Inserting course data")
-        insertCourseData("/Users/davidzhang/Downloads/Basic Majors.xlsx", course)
-    
-
-    
-    
-    
+        insertCourseData("/Users/davidzhang/Downloads/Classes.xlsx", course)
+        
+        #Insert student data
+        print("Python: Inserting student data")
+        insertStudentData("/Users/davidzhang/Downloads/Students.xlsx", student)
+        
+        # Insert major data
+        print("Python: Inserting major data")
+        insertMajorData("/Users/davidzhang/Downloads/Major.xlsx", major)
+        """
+        
+        
+        # acessing student data
+        print("Python: Accessing student data", "\n")
+        # get doucment with campus_id OF66938
+        student_data = student.find_one({"campus_id": "OF66938"})
+        print(student_data)
+        # print the student email
+        print("Student email: ", student_data["email"])
+        

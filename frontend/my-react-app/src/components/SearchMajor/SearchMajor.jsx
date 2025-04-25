@@ -31,8 +31,9 @@ const SearchMajor = ({ onMajorSelect}) => {
     const fetchMajors = async () => {
       try {
         // Fetch data from Flask API and then update state with fetched data
-        const response = await axios.get("/api/v2/majors");
+        const response = await axios.get("http://127.0.0.1:5000/api/v2/majors");
         setMajors(response.data.majors);
+        console.log("Majors fetched:", response.data);
         setLoading(false);
       } catch (err) {
           console.error("Error fetching majors:", err);

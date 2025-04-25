@@ -2,9 +2,19 @@
   border: 2px solid black;
   font-size: var(--schedule-text-size);
   width: calc(25% - 10px);
-  min-width: calc(8ch + 20px);
-  min-height: 200px;
+  /* min-width: calc(8ch + 20px); */
+
+  min-height: 250px;
   margin-bottom: 20px;
+
+  flex: 1;
+  background: #fdfdfd;
+  border: 1px solid #ddd;
+  margin: 0 0.5rem;
+  padding: 5px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
 .no-courses-added {
@@ -12,16 +22,74 @@
   margin: 10px;
   color: #888;
   text-align: center;
+/* 
+  background-color: rgb(241, 241, 241);  */
+  /* border-left: 5px solid #f6b93b; */
 }
 
 .session-name {
-  background-color: bisque;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  /* background-color: bisque; */
   height: 38px;
   display: flex;
   justify-content: center;
   line-height: 38px;
   font-weight: 600;
+
+
 }
+
+
+.session:nth-child(even){
+  background-color: rgb(241, 241, 241); 
+  border-left: 5px solid #f6b93b;
+}
+
+.session:nth-child(even) .course{
+  background-color: #f6b93b;;
+  color: white;
+}
+
+.session:nth-child(odd){
+  
+  background-color: #ffeaa7; 
+  border-left: 5px solid #f6b93b;
+}
+
+.session:nth-child(odd) .course{
+  background-color: rgb(252, 250, 250); 
+}
+
+
+.session .course{
+  
+  background-color: red;
+}
+
+
+
+
+
+/* .session:nth-child(1){
+  background-color: #fce5cd; 
+  border-left: 5px solid #d2691e; 
+}
+
+.session:nth-child(2){
+  background-color: #dbeeff; 
+  border-left: 5px solid #5dade2;
+}
+
+.session:nth-child(3){
+  background-color: #dbf5d4;
+  border-left: 5px solid #58b368;
+}
+
+.session:nth-child(4){
+  background-color: #ffeaa7; 
+  border-left: 5px solid #f6b93b;
+} */
 
 .session-courses {
   display: flex;

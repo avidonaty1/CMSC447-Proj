@@ -31,13 +31,14 @@ const Session = ({semester, session_title, courses}) => {
     return(
         <>
             <div className="session">
-                <div className="session-name">{session_title}</div>
+                {console.log(session_title)}
+                <div className="session-name ${session_title}" >{session_title}</div>
                 <div
                     ref={setNodeRef}
-                    className={`session-courses ${isOver ? 'droppable-over' : ''}`}
-                    >
+                    className={`session-courses ${isOver ? 'droppable-over' : ''}`}>
+                        
                     {Array.isArray(courses) && courses.length === 0 ? (
-                        <div className="no-courses-added">No courses were added to this session.</div>
+                        <div className="no-courses-added">No courses were added to this session. <br /> <br /> Add or drag a course</div>
                         ) : (
                         courses.map((course, index) => (
                             <DraggableCourse                               

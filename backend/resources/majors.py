@@ -1,6 +1,7 @@
 from flask import current_app
 from flask_restful import Resource
-from sample_data import majors
+#from sample_data import majors
+from Database import connectingToDatabase, enterDatabase, openMajorDB
 
 class Majors(Resource):
     # This class defines a RESTful resource for handling GET requests
@@ -18,22 +19,19 @@ class Majors(Resource):
                    or if an internal server error occurs (HTTP 500)
         """
         try:
-            # Fetch the data for the majors list. Only needs to display the name.
-            # For now this is from the majors list in sample_data.py
-            majors_data = [
-                {
-                    "_id": major["_id"], 
-                    "name": major["name"],  
-                }
-                for major in majors
-            ]
+            # Opening the connection for mongoDB
+            client = connectingToDatabase()
+            # Getting to our database
+            db = enterDatabase("UMBC", client)
+            # Opening the Collection 
+            major = openMajorDB(db)
 
-            # Handle error case where no majors are found in the dataset
-            if not majors_data:
+            # Handle error case where no (major collection) are found in the dataset
+            if not major:
                 return {"error": "No majors found."}, 404
             
             # Return the list of majors as a JSON response with HTTP 200 status
-            return {"majors": majors_data}, 200
+            return {"majors": major}, 200
         
         except Exception as e:
             # Log the error for debugging
@@ -43,3 +41,11 @@ class Majors(Resource):
                 "error": "An error occurred while retrieving majors.",
                 "message": str(e)
             }, 500
+
+# 'major' collection looks like this:
+# {'_id': ObjectId(STRING), 'name': STRING, 'number_credits': INT, 
+#   'required_courses': ARRAY OF STRING, 'default_plan': {NESTED DICTIONARY}
+
+# Example:
+# 'default_plan': {'MATH151': {'year': 1, 'session': 'Fall'}, 'CMSC201': {'year': 1, 'session': 'Fall'}, 'CMSC202': {'year': 1, 'session': 'Spring'}}}
+

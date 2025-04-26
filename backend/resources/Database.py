@@ -141,11 +141,11 @@ def insertMajorData(fileAddress, collection): # （INCOMPLETE)
         filtered_df = df.dropna(subset=['default_plan', 'year', 'session'])
         nested_dict = filtered_df.set_index('default_plan')[['year', 'session']].to_dict(orient='index')
         
-        # use 'Mechanical Engineering' as the unique identifier
-        if 'Mechanical Engineering' in dict_elements:
+        # use 'name' as the unique identifier
+        if 'name' in dict_elements:
             # Update the document with the new data
             collection.update_one(
-                {"name": dict_elements["name"]}, # Match by 'Mechanical Engineering'
+                {"name": dict_elements["name"]}, # Match by 'name'
                 {"$set": {
                     "number_credits": dict_elements["number_credits"],
                     "required_courses": required_courses_array,
@@ -154,7 +154,7 @@ def insertMajorData(fileAddress, collection): # （INCOMPLETE)
                 upsert=True              # Insert if it doesn't exist
             )
         else:
-            # Insert the record if it doesn't have an 'Mechanical Engineering' field
+            # Insert the record if it doesn't have an 'name' field
             collection.insert_one({
                 "name": dict_elements["name"],
                 "number_credits": dict_elements["number_credits"],
@@ -260,8 +260,8 @@ if __name__ == "__main__":
         print("Python: Inserting major data")
         insertMajorData("/Users/davidzhang/Downloads/Major.xlsx", major)
         """
-        
-        
+        print(major)
+        """
         # acessing student data
         print("Python: Accessing student data", "\n")
         # get doucment with campus_id OF66938
@@ -269,4 +269,4 @@ if __name__ == "__main__":
         print(student_data)
         # print the student email
         print("Student email: ", student_data["email"])
-        
+        """

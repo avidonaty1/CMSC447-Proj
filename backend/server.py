@@ -1,6 +1,8 @@
 # Future: import logging and set up custom logging
 from flask import Flask, send_from_directory
 from flask_restful import Api
+from flask_cors import CORS
+
 from resources.majors import Majors
 from resources.major_plan import MajorPlan
 from resources.course_info import CourseInfo
@@ -11,6 +13,7 @@ from resources.student_plan import StudentPlan
 
 app = Flask(__name__, static_folder="../my-react-app/dist", static_url_path="/")
 api = Api(app)
+CORS(app, origins=["http://localhost:5173"])
 
 # Resource for retrieving the list of majors
 api.add_resource(Majors, '/api/v2/majors')

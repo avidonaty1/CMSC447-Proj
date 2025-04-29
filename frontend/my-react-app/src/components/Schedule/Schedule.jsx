@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
-// import { cloneDeep } from "lodash" - might want to use this
+import { cloneDeep } from "lodash";
 import Year from "../Year/Year.jsx";
 import "./Schedule.css";
 import {
   getCourseIdsUpTo,
   validateCourseDrop,
-  checkDependencyViolation
+  checkDependencyViolation,
+  invalidateCacheForCourse
 } from "./courseSequenceChecking.js";
 
 /**
@@ -70,7 +71,13 @@ const Schedule = ({ plan, onPlanChange }) => {
     }
 
     const [fromYear, fromSession, courseId] = activeParts;
-
+    // Normalize courseId to ensure it's an integer
+    const normalizedCourseId = Number(courseId);
+    if (isNaN(normalizedCourseId)) {
+      console.error("❌ Invalid course ID (not a number:", courseId);
+      return;
+    }
+    console.log("Normalized course ID:", normalizedCourseId, typeof normalizedCourseId);
     // Drop target should be in format: "yearKey-sessionKey"
     // So that it drops into a session
     const toParts = over.id.split("-");
@@ -84,7 +91,8 @@ const Schedule = ({ plan, onPlanChange }) => {
     console.log(`📦 Moving "${active.id}" from ${fromYear}-${fromSession} ➡️ ${toYear}-${toSession}`);
     // Update the plan by moving the course to the new position
     // Deep clone the current plan so we can modify it
-    const updatedPlan = JSON.parse(JSON.stringify(plan));
+    const updatedPlan = cloneDeep(plan);
+    invalidateCacheForCourse(normalizedCourseId);
 
     // Verify that source and target sessions exist in the plan
     if (!updatedPlan[fromYear] || !updatedPlan[fromYear][fromSession]) {
@@ -98,9 +106,11 @@ const Schedule = ({ plan, onPlanChange }) => {
 
     // Find index of dragged course (course tuple) in the source session
     const sourceCourses = updatedPlan[fromYear][fromSession];
+    console.log("Source courses before update:", sourceCourses);
     const sourceIndex = sourceCourses.findIndex(
-      (course) => String(course[0]) === courseId
+      (course) => Number(course[0]) === normalizedCourseId
     );
+    console.log("Source courses after update:", sourceCourses);
     if (sourceIndex === -1) {
       console.error("❌ Course not found in source session");
       return;
@@ -108,18 +118,27 @@ const Schedule = ({ plan, onPlanChange }) => {
 
     // Remove course from its source session
     const [movedCourse] = sourceCourses.splice(sourceIndex, 1);
+    movedCourse[0] = Number(movedCourse[0]);
+    console.log("Normalized Move Course ID", movedCourse[0], typeof movedCourse[0]);
 
     // Before updating the plan, check that prerequisites and corequisites are present
     const previousSessionIds = getCourseIdsUpTo(updatedPlan, toYear, toSession, false);
+    console.log("Previous Sessions IDs:", previousSessionIds);
     const currAndPrevSessionIds = getCourseIdsUpTo(updatedPlan, toYear, toSession, true);
+    console.log("Current and previous session IDS:", currAndPrevSessionIds);
 
-    const validDrop = await validateCourseDrop(Number(courseId), previousSessionIds, currAndPrevSessionIds);
+    console.log("Validating course drop for ", normalizedCourseId);
+    const validDrop = await validateCourseDrop(normalizedCourseId, previousSessionIds, currAndPrevSessionIds);
     if (!validDrop) {
+      alert("Moving this course would violate one or more prerequisites or corequisites.")
+      console.log("validate course drop failed");
       return;
     }
-    const dependencyViolated = await checkDependencyViolation(updatedPlan, toYear, toSession, courseId);
+    console.log("Checking dependencies");
+    const dependencyViolated = await checkDependencyViolation(updatedPlan, toYear, toSession, normalizedCourseId);
     if (dependencyViolated) {
-      alert("Moving this course would violate one or more prerequisites.")
+      alert("Moving this course would violate one or more prerequisites or corequisites.")
+      console.log("check dependency violation failed");
       return;
     }
     

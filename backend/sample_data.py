@@ -93,7 +93,7 @@ courses = [
         "offered_winter": False,
         "offered_summer": True,
         "prerequisites": [],
-        "corequisites": [Course.MATH151.value],
+        "corequisites": [],
         "advisor_notes": """You cannot take MATH151 at the same time unless you have taken at least MATH150
         or tested out of MATH. Consult your advisor.""",
     },
@@ -112,7 +112,7 @@ courses = [
         "offered_winter": False,
         "offered_summer": True,
         "prerequisites": [Course.CMSC201.value],
-        "corequisites": [Course.MATH151.value],
+        "corequisites": [],
         "advisor_notes": "None",
     },
     {

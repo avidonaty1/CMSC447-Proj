@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useDroppable } from "@dnd-kit/core";
 import { cloneDeep } from "lodash";
@@ -23,19 +23,53 @@ import "./Session.css";
  */
 
 const Session = ({ semester, session_title, courses }) => {
-    // state to keep track of selected course for popup details
+    // State to keep track of selected course for popup details
     const [selectedCourse, setSelectedCourse] = useState(null);
+    
+    // State to keep track of alert for excess credit
+    const [alertDisplayed, setAlertDisplayed] = useState(false);
 
     // Set up a droppable container with the given semester id
     const { setNodeRef, isOver } = useDroppable({ id: semester });
 
     // Clone courses to ensure immutability
     const clonedCourses = cloneDeep(courses);
+    // Calculate the total credits for the courses
+    const totalCredits = clonedCourses.reduce((sum, course) => sum + course.credit_hours, 0);
+
+    // Convert session_title to uppercase to use for credit limit chacking
+    const upperCaseTitle = session_title.toUpperCase();
+
+    // UseEffect to trigger alert if credit limit for session is exceeded
+    useEffect(() => {
+        if (!alertDisplayed) {
+            if (totalCredits > 19 && (upperCaseTitle === "FALL" || upperCaseTitle === "SPRING")) {
+                alert(
+                    "Warning: Credit limit exceeded. You would need to fill out an excess credit form. Consider rescheduling courses."
+                );
+                setAlertDisplayed(true);
+            } else if (upperCaseTitle === "SUMMER" && totalCredits > 8) {
+                alert(
+                    "Warning: Credit limit exceeded. You would need to fill out an excess credit form. Consider rescheduling courses."
+                );
+                setAlertDisplayed(true);
+            }
+            else if (upperCaseTitle === "WINTER" && totalCredits > 4) {
+                alert(
+                    "Warning: Credit limit exceeded. You would need to fill out an excess credit form. Consider rescheduling courses."
+                );
+                setAlertDisplayed(true);
+            }
+        }
+    }, [totalCredits, upperCaseTitle, alertDisplayed]);
+
+    
+
 
     return (
         <>
             <div className="session">
-                <div className="session-name ${session_title}" >{session_title}</div>
+                <div className="session-name" >{session_title}</div>
                 <div
                     ref={setNodeRef}
                     className={`session-courses ${isOver ? 'droppable-over' : ''}`}>
@@ -52,8 +86,12 @@ const Session = ({ semester, session_title, courses }) => {
                                 onClick={() => setSelectedCourse(cloneDeep(course))}
                             />
                         ))
-                    )
-                    }
+                    )}
+                </div>
+
+                {/* Display total credits below the course list */}
+                <div className="total-credits">
+                    Total Credits: {totalCredits}
                 </div>
             </div>
 

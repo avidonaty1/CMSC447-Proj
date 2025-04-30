@@ -8,9 +8,12 @@ from resources.course_requirements import CourseRequirements
 from resources.student_email import StudentEmail
 from resources.student_major import StudentMajor
 from resources.student_plan import StudentPlan
+# from flask_cors import CORS  
+
 
 app = Flask(__name__, static_folder="../my-react-app/dist", static_url_path="/")
 api = Api(app)
+# CORS(app, origins=["http://localhost:5173"])
 
 # Resource for retrieving the list of majors
 api.add_resource(Majors, '/api/v2/majors')

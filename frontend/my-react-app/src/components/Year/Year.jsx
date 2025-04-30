@@ -24,7 +24,7 @@ const Year = ({ yearKey, sessions }) => {
 
     return (
         <div className="schedule-year">
-        <h3>{displayYear}</h3>
+        <h3 className="schedule-year-title">{displayYear}</h3>
         <div className="schedule-sessions">
           {Object.entries(sessions).map(([sessionKey, courses]) => (
             <Session

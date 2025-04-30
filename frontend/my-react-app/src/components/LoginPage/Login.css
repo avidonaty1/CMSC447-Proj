@@ -1,1 +1,161 @@
 /* TO DO: login-page and login-form styling" */
+
+/* .login-page{
+    height: 1000px;
+    background-color: rebeccapurple;
+    
+}
+
+html{
+    background-image: url("/34920997734_44b5ba4272_h.jpg");
+} */
+
+
+#login-page {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .left-side-login {
+    width: 50%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    gap: 6vh;
+  }
+  
+  .login-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    background-color: white;
+  }
+  
+  .welcome-message {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #222;
+  }
+  
+  .form-item {
+    margin-bottom: 1.5rem;
+  }
+  
+  .input-field {
+    width: 100%;
+    height: 45px;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    transition: border 0.3s ease;
+  }
+  
+  .input-field:focus {
+    border-color: #ffa500;
+    outline: none;
+  }
+  
+  .login-page-button {
+    width: 100%;
+    height: 45px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-page-button.submit-button {
+    background-color: #ffa500;
+    color: white;
+  }
+  
+  .login-page-button.submit-button:hover {
+    background-color: #e69500;
+  }
+  
+  .login-page-button:not(.submit-button) {
+    background-color: #f5f5f5;
+    color: #444;
+    border: 1px solid #ccc;
+  }
+  
+  .login-page-button:not(.submit-button):hover {
+    background-color: #e6e6e6;
+  }
+  
+  .create-accout-text {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .create-accout-text a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .create-accout-text a:hover {
+    text-decoration: underline;
+  }
+  
+  .right-side-login {
+    width: 50%;
+    background-image: url("../src/assets/34920997734_44b5ba4272_h.jpg");
+    background-size: cover;
+    background-position: center;
+
+    border-left: 5px solid #ffa500;
+  }
+  
+
+  .login-page-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* spacing between icon and text */
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .login-page-button svg {
+    flex-shrink: 0;
+  }
+  
+  .login-page-button:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .login-with-google {
+    color: #444;
+  }
+  
+
+  .umbc-logo-img {
+    width: 100%;
+    max-width: 550px; /* or whatever fits your layout */
+    height: auto;
+    aspect-ratio: 32 / 7; /* maintains your 32em by 7em ratio */
+    background-image: url("../src/assets/UMBC-primary-logo-RGB.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  

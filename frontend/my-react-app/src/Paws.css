@@ -1,0 +1,18 @@
+.paw-confetti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  
+  .paw {
+    position: absolute;
+    /* filter: grayscale(100%) brightness(1.2); */
+    /* opacity: 0.2; */
+    transition: transform 0.3s ease;
+  }
+  

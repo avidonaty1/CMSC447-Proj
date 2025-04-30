@@ -63,7 +63,9 @@ const getOrderedSessions = (plan) => {
     }
 
     try {
+      // const response = await axios.get(`http://127.0.0.1:5000/api/v2/courses/${courseId}/requirements`);
       const response = await axios.get(`/api/v2/courses/${courseId}/requirements`);
+
       // Cache and return the data
       requirementsCache[courseId] = response.data;
       return response.data;

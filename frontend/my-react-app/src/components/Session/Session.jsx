@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { useDroppable } from "@dnd-kit/core";
+import { cloneDeep } from "lodash";
 import DraggableCourse from "../DraggableCourse/DraggableCourse.jsx";
 import CoursePopUp from "../CoursePopup/CoursePopUp.jsx";
 import "./Session.css";
@@ -15,48 +16,50 @@ import "./Session.css";
  * Props:
  * - semester (string, required): Identifier for the session
  * - session_title (string, required): Title of the session
- * - courses (array, required): An array of course tuples ([[courseId, courseNumber], ...])
+ * - courses (array, required): An array of course objects
  * 
  * Return:
  * A section containing the session name and a droppable area that lists all its courses
  */
 
-const Session = ({semester, session_title, courses}) => {
+const Session = ({ semester, session_title, courses }) => {
     // state to keep track of selected course for popup details
     const [selectedCourse, setSelectedCourse] = useState(null);
 
     // Set up a droppable container with the given semester id
     const { setNodeRef, isOver } = useDroppable({ id: semester });
 
-    return(
+    // Clone courses to ensure immutability
+    const clonedCourses = cloneDeep(courses);
+
+    return (
         <>
             <div className="session">
-                {console.log(session_title)}
                 <div className="session-name ${session_title}" >{session_title}</div>
                 <div
                     ref={setNodeRef}
                     className={`session-courses ${isOver ? 'droppable-over' : ''}`}>
-                        
-                    {Array.isArray(courses) && courses.length === 0 ? (
+
+                    {Array.isArray(clonedCourses) && clonedCourses.length === 0 ? (
                         <div className="no-courses-added">No courses were added to this session. <br /> <br /> Add or drag a course</div>
-                        ) : (
-                        courses.map((course, index) => (
-                            <DraggableCourse                               
+                    ) : (
+                        clonedCourses.map((course, index) => (
+                            <DraggableCourse
                                 key={index}
                                 course={course}
                                 semester={semester}
                                 index={index}
-                                onClick={() => setSelectedCourse(course)}
+                                onClick={() => setSelectedCourse(cloneDeep(course))}
                             />
-                            ))
-                        )
+                        ))
+                    )
                     }
                 </div>
             </div>
 
             {selectedCourse && (
                 <CoursePopUp
-                    courseId={selectedCourse[0]}
+                    courseId={selectedCourse.id}
                     onClose={() => setSelectedCourse(null)}
                 />
             )}
@@ -65,9 +68,17 @@ const Session = ({semester, session_title, courses}) => {
 };
 // PropTypes for type safety
 Session.propTypes = {
-semester: PropTypes.string.isRequired,
-session_title: PropTypes.string.isRequired,
-courses: PropTypes.arrayOf(PropTypes.array).isRequired,
+    semester: PropTypes.string.isRequired,
+    session_title: PropTypes.string.isRequired,
+    courses: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            number: PropTypes.string.isRequired,
+            credit_hours: PropTypes.number.isRequired,
+            prerequisites: PropTypes.arrayOf(PropTypes.number).isRequired,
+            corequisites: PropTypes.arrayOf(PropTypes.number).isRequired,
+        })
+    ).isRequired,
 };
 
 export default Session;

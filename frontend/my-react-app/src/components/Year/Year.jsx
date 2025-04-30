@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { cloneDeep } from "lodash";
 import Session from "../Session/Session.jsx";
 import "./Year.css";
 /**
@@ -7,12 +8,12 @@ import "./Year.css";
  * This component represents a single academic year in the schedule
  * It receives the year key (i.e. year1) and an object of sessions, where 
  * each key is a session name (i.e. "Fall") and the value is an array of 
- * course tuples [[courseId, courseNumber], ...]
+ * course objects
  * 
  * Props:
  * - yearKey (string, required): The identifier of the year (i.e. year1)
  * - sessions (object, required): An object mapping session names to arrays
- *   of course tuples
+ *   of course objects
  * 
  * Return:
  * A container that renders a header for the year 
@@ -22,11 +23,13 @@ const Year = ({ yearKey, sessions }) => {
   // want yearKey to display as YEAR 1
   const displayYear = `${yearKey.slice(0,4)} ${yearKey.slice(4)}`.toUpperCase();
 
+  // Create a deep clone to ensure immutability
+  const clonedSessions = cloneDeep(sessions);
     return (
         <div className="schedule-year">
         <h3 className="schedule-year-title">{displayYear}</h3>
         <div className="schedule-sessions">
-          {Object.entries(sessions).map(([sessionKey, courses]) => (
+          {Object.entries(clonedSessions).map(([sessionKey, courses]) => (
             <Session
               key={sessionKey}
               semester={`${yearKey}-${sessionKey}`}

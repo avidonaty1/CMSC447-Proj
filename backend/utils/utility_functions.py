@@ -5,9 +5,10 @@ def build_nested_plan(plan):
     """
     Build a nested plan organized by year and session.
     Args:
-        plan (dict): A dictionary where keys are course IDs and values are year/session
+        plan (dict): A dictionary where keys are course objects and values are year/session
         Returns:
-        dict: A nested dictionary grouped by year and session
+        dict: A nested dictionary grouped by year and session where each session contains 
+              an array of course objects
     """
     nested_plan = {
         "year1": {"Fall": [], "Winter": [], "Spring": [], "Summer": []},
@@ -22,5 +23,11 @@ def build_nested_plan(plan):
         if year_key in nested_plan and session in nested_plan[year_key]:
             course = next((c for c in sample_data.courses if c["_id"] == course_id), None)
             if course:
-                nested_plan[year_key][session].append((course["_id"], course["number"]))
+                nested_plan[year_key][session].append(
+                    {"id": course["_id"],
+                     "number": course["number"],
+                     "credit_hours": course["credit_hours"],
+                     "prerequisites": course["prerequisites"],
+                     "corequisites": course["corequisites"],
+                     })
     return nested_plan

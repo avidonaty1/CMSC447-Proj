@@ -93,7 +93,7 @@ courses = [
         "offered_winter": False,
         "offered_summer": True,
         "prerequisites": [],
-        "corequisites": [Course.MATH151.value],
+        "corequisites": [],
         "advisor_notes": """You cannot take MATH151 at the same time unless you have taken at least MATH150
         or tested out of MATH. Consult your advisor.""",
     },
@@ -112,8 +112,8 @@ courses = [
         "offered_winter": False,
         "offered_summer": True,
         "prerequisites": [Course.CMSC201.value],
-        "corequisites": [Course.MATH151.value],
-        "advisor_notes": "None",
+        "corequisites": [],
+        "advisor_notes": "If you have not taken at least MATH150 or tested out of math, you must be enrolled in MATH151",
     },
     {
         "_id": Course.PHYS121.value,

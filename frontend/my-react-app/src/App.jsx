@@ -210,8 +210,6 @@ function App() {
             onPlanChange={handlePlanChange} 
             /> */}
 
-
-            <Footer />
             <Footer />
           </>
         )}

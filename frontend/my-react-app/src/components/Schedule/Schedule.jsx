@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
-// import { cloneDeep } from "lodash" - might want to use this
+import { cloneDeep } from "lodash";
 import Year from "../Year/Year.jsx";
 import "./Schedule.css";
 import {
-  getCourseIdsUpTo,
+  getCoursesUpTo,
   validateCourseDrop,
   checkDependencyViolation
 } from "./courseSequenceChecking.js";
@@ -23,11 +23,16 @@ import {
  * Props:
  * - plan (object, required): A nested object containing the plan
  *   for a major. There are keys for each year, and each year contains
- *   keys for a session. Each session contains an array of course tuples
- *   [courseId, courseNumber]. 
+ *   keys for a session. Each session contains an array of course dictionaries
+ *   {"id": int,
++     "number": string,
++     "credit_hours": int,
++     "prerequisites": [],
++     "corequisites": []
++    } 
  * - onPlanChange(function, required): A callback function that is called
  *   with the updated Plan object whenever a course is moved.
- * 
+ *   
  * Return:
  * The component return a DnDContext that wraps the schedule layout.
  * If the plan is not provided or empty, a message is displayed
@@ -86,8 +91,8 @@ const Schedule = ({ plan, onPlanChange }) => {
 
     console.log(`📦 Moving "${active.id}" from ${fromYear}-${fromSession} ➡️ ${toYear}-${toSession}`);
     // Update the plan by moving the course to the new position
-    // Deep clone the current plan so we can modify it
-    const updatedPlan = JSON.parse(JSON.stringify(plan));
+    // Deep clone the current plan to prevent mutation of the original object
+    const updatedPlan = cloneDeep(plan)
 
     // Verify that source and target sessions exist in the plan
     if (!updatedPlan[fromYear] || !updatedPlan[fromYear][fromSession]) {
@@ -101,35 +106,38 @@ const Schedule = ({ plan, onPlanChange }) => {
 
     // Find index of dragged course (course tuple) in the source session
     const sourceCourses = updatedPlan[fromYear][fromSession];
+    
     const sourceIndex = sourceCourses.findIndex(
-      (course) => String(course[0]) === courseId
+      (course) => String(course.id) === courseId
     );
     if (sourceIndex === -1) {
       console.error("❌ Course not found in source session");
       return;
     }
 
-    // Remove course from its source session
+    // Deep clone the moved course 
     const [movedCourse] = sourceCourses.splice(sourceIndex, 1);
-
+    
     // Before updating the plan, check that prerequisites and corequisites are present
-    const previousSessionIds = getCourseIdsUpTo(updatedPlan, toYear, toSession, false);
-    const currAndPrevSessionIds = getCourseIdsUpTo(updatedPlan, toYear, toSession, true);
+    // Deep clone possible dependent courses
+    const previousSessionCourses = cloneDeep(getCoursesUpTo(updatedPlan, toYear, toSession, false));
+    const currAndPrevSessionCourses = cloneDeep(getCoursesUpTo(updatedPlan, toYear, toSession, true));
 
-    const validDrop = await validateCourseDrop(Number(courseId), previousSessionIds, currAndPrevSessionIds);
+    const validDrop = await validateCourseDrop(movedCourse, previousSessionCourses, currAndPrevSessionCourses);
     if (!validDrop) {
+      alert("Moving this course would violate one or more prerequisites or corequisites.")
       return;
     }
-    const dependencyViolated = await checkDependencyViolation(updatedPlan, toYear, toSession, courseId);
+    const dependencyViolated = await checkDependencyViolation(updatedPlan, toYear, toSession, movedCourse);
     if (dependencyViolated) {
-      alert("Moving this course would violate one or more prerequisites.")
+      alert("Moving this course would violate one or more prerequisites or corequisites.")
       return;
     }
     
     // Append course to target session if both checks pass
-    updatedPlan[toYear][toSession].push(movedCourse);
+    updatedPlan[toYear][toSession].push(cloneDeep(movedCourse));
     // Update plan state with new arrangement
-    onPlanChange(updatedPlan);
+    onPlanChange(cloneDeep(updatedPlan));
   };
 
   // If plan is null or empty, display a prompt to choose a major
@@ -152,7 +160,7 @@ const Schedule = ({ plan, onPlanChange }) => {
         - the key prop is set to yearKey for React's internal use
         - yearKey and sessions are passed a props*/}
         {Object.entries(plan).map(([yearKey, sessions]) => (
-          <Year key={yearKey} yearKey={yearKey} sessions={sessions} />
+          <Year key={yearKey} yearKey={yearKey} sessions={cloneDeep(sessions)} />
         ))}
       </div>
     </DndContext>

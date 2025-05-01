@@ -14,6 +14,8 @@ class MajorPlan(Resource):
     - The courses are dictopnaries with key-value pairs:
     id-course.id
     number-course.number
+    offered_winter-course.offered_winter
+    offered_summer-course.offered_summer
     credit_hours-course.credit_hours
     corequisites-course.corequisites 
     - JSON, appears as an array (i.e [101, MATH151])
@@ -28,12 +30,16 @@ class MajorPlan(Resource):
             {"id": 101,
             "number": "MATH151",
             "credit_hours": 4,
+            "offered_winter": false,
+            "offered_summer": true,
             "prerequisites", [],
             "corequisites", []
             },
             {"id": 103,
             "number": "CMSC201",
             "credit_hours": 4,
+            "offered_winter": false,
+            "offered_summer": true,
             "prerequisites", [],
             "corequisites", []
             },
@@ -41,7 +47,9 @@ class MajorPlan(Resource):
           "Winter": [],
           "Spring": [
             {"id": 104,
-            "number": "CMSC201",
+            "number": "CMSC202",
+            "offered_winter": false,
+            "offered_summer": true,
             "credit_hours": 4,
             "prerequisites", [103],
             "corequisites", []

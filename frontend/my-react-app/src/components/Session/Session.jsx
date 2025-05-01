@@ -97,7 +97,7 @@ const Session = ({ semester, session_title, courses }) => {
 
             {selectedCourse && (
                 <CoursePopUp
-                    courseId={selectedCourse.id}
+                    courseId={Number(selectedCourse.id)}
                     onClose={() => setSelectedCourse(null)}
                 />
             )}
@@ -113,6 +113,8 @@ Session.propTypes = {
             id: PropTypes.number.isRequired,
             number: PropTypes.string.isRequired,
             credit_hours: PropTypes.number.isRequired,
+            offered_winter: PropTypes.bool.isRequired,
+            offered_summer: PropTypes.bool.isRequired,
             prerequisites: PropTypes.arrayOf(PropTypes.number).isRequired,
             corequisites: PropTypes.arrayOf(PropTypes.number).isRequired,
         })

@@ -16,13 +16,14 @@ import { cloneDeep } from "lodash";
 
 // Return an ordered array of session keys from the plan
 const getOrderedSessions = (plan) => {
+  const clonedPlan = cloneDeep(plan);
   const orderedSessions = [];
   // sort year keys to guarantee ascending order
-  const yearKeys = Object.keys(plan).sort();
+  const yearKeys = Object.keys(clonedPlan).sort();
   const sessionOrder = ["Fall", "Winter", "Spring", "Summer"];
   yearKeys.forEach(year => {
     sessionOrder.forEach(session => {
-      if (plan[year]?.[session]) {
+      if (clonedPlan[year]?.[session]) {
         orderedSessions.push({ year, session });
       }
     });
@@ -34,7 +35,8 @@ const getOrderedSessions = (plan) => {
 // Get all courses from sessions that come before (or up to) a target session
 // If includeTarget is false, only sessions strictly before
 const getCoursesUpTo = (plan, targetYear, targetSession, includeTarget = false) => {
-  const orderedSessions = getOrderedSessions(plan);
+  const clonedPlan = cloneDeep(plan);
+  const orderedSessions = getOrderedSessions(clonedPlan);
   const targetIndex = orderedSessions.findIndex(
     s => s.year === targetYear && s.session === targetSession
   );
@@ -46,7 +48,7 @@ const getCoursesUpTo = (plan, targetYear, targetSession, includeTarget = false) 
 
   for (let i = 0; i < endIndex; i++) {
     const { year, session } = orderedSessions[i];
-    plan[year][session]?.forEach(course => {
+    clonedPlan[year][session]?.forEach(course => {
       courses.push(cloneDeep(course));
     });
   };
@@ -56,18 +58,20 @@ const getCoursesUpTo = (plan, targetYear, targetSession, includeTarget = false) 
 
 /**
  * validateCourseDrop checks whether corequisites and prerequisites for the
- * dropped course are present in the correct sequence
+ * dropped course are present in the correct sequence.
+ * It also checks if a course can be added to winter or summer (if applicable).
  * 
  * @param {number} course - course being dropped
  * @param {Array<course>} previousSessionCourses - All courses from previous sessions
  * @param {Array<course>} currAndPrevSessionCourses - All courses up to / including target
+ * @param {string} toSession - The target session (i.e. FALL)
  * 
  * @returns {Promise<boolean>} - Resolves true if both requirements are met
  */
-async function validateCourseDrop(movedCourse, previousSessionCourses, currAndPrevSessionCourses) {
+async function validateCourseDrop(movedCourse, previousSessionCourses, currAndPrevSessionCourses, toSession) {
   try {
-    // deconstruct the prerequisite and corequisite properties from MovedCourse
-    const { prerequisites = [], corequisites = [] } = movedCourse;
+    // deconstruct the relevant properties from MovedCourse
+    const { prerequisites = [], corequisites = [], offered_winter, offered_summer} = movedCourse;
 
     // Rule 1: Course A is a prerequisite for Course B
     // Ensure all prerequisites for the course being dropped are present in previous sessions
@@ -87,6 +91,17 @@ async function validateCourseDrop(movedCourse, previousSessionCourses, currAndPr
       }
     }
     // Rule 1 and 2 satisfied
+
+    // Additional check: is the course offered in summer or winter
+    if (toSession === "SUMMER" && !offered_summer) {
+      console.error("Course not offered in summer");
+      return false;
+    }
+    if (toSession === "WINTER" && !offered_winter) {
+      console.error("Course not offered in winter");
+      return false;
+    }
+    
     return true;
   } catch (err) {
     console.error("Error validating course drop:", err);
@@ -107,7 +122,8 @@ async function validateCourseDrop(movedCourse, previousSessionCourses, currAndPr
  * @returns {Promise<boolean>} - Resolves to true if a dependency violation is found
  */
 async function checkDependencyViolation(updatedPlan, targetYear, targetSession, droppedCourse) {
-  const orderedSessions = getOrderedSessions(updatedPlan);
+  const clonedPlan = cloneDeep(updatedPlan);
+  const orderedSessions = getOrderedSessions(clonedPlan);
   const targetIndex = orderedSessions.findIndex(
     (s) => s.year === targetYear && s.session === targetSession
   );
@@ -116,7 +132,7 @@ async function checkDependencyViolation(updatedPlan, targetYear, targetSession, 
   // Iterate over sessions up to the one where the course is dropped (inclusive)
   for (let i = 0; i <= targetIndex; i++) {
     const { year, session } = orderedSessions[i];
-    const courses = updatedPlan[year]?.[session] || [];
+    const courses = clonedPlan[year]?.[session] || [];
 
     for (const course of courses) {
       const { prerequisites = [], corequisites = [] } = course;
@@ -134,7 +150,7 @@ async function checkDependencyViolation(updatedPlan, targetYear, targetSession, 
           console.error(`Corequisite rule violated: Course ${course.id} depends on ${droppedCourse.id}`);
           return true;
         }
-        if (i < targetIndex && !updatedPlan[orderedSessions[targetIndex].year]?.[orderedSessions[targetIndex].session]?.some(
+        if (i < targetIndex && !clonedPlan[orderedSessions[targetIndex].year]?.[orderedSessions[targetIndex].session]?.some(
           (c) => c.id === droppedCourse.id)) {
           console.error("Corequisite must be in same or earlier session");
           return true;

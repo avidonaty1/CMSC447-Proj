@@ -27,6 +27,8 @@ def build_nested_plan(plan):
                     {"id": course["_id"],
                      "number": course["number"],
                      "credit_hours": course["credit_hours"],
+                     "offered_winter": course["offered_winter"],
+                     "offered_summer": course["offered_summer"],
                      "prerequisites": course["prerequisites"],
                      "corequisites": course["corequisites"],
                      })

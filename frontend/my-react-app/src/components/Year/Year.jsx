@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { cloneDeep } from "lodash";
 import Session from "../Session/Session.jsx";
@@ -24,17 +24,17 @@ const Year = ({ yearKey, sessions }) => {
   const displayYear = `${yearKey.slice(0,4)} ${yearKey.slice(4)}`.toUpperCase();
 
   // Create a deep clone to ensure immutability
-  const clonedSessions = cloneDeep(sessions);
+  const memoizedSessions = useMemo(() => cloneDeep(sessions), [sessions]);
     return (
         <div className="schedule-year">
         <h3 className="schedule-year-title">{displayYear}</h3>
         <div className="schedule-sessions">
-          {Object.entries(clonedSessions).map(([sessionKey, courses]) => (
+          {Object.entries(memoizedSessions).map(([sessionKey, courses]) => (
             <Session
               key={sessionKey}
               semester={`${yearKey}-${sessionKey}`}
               session_title={sessionKey.toUpperCase()}
-              courses={courses}
+              courses={cloneDeep(courses)}
             />
           ))}
         </div>

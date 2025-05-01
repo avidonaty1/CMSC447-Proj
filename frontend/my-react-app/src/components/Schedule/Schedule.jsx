@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { cloneDeep } from "lodash";
@@ -9,6 +9,7 @@ import {
   validateCourseDrop,
   checkDependencyViolation
 } from "./courseSequenceChecking.js";
+import { use } from "react";
 
 /**
  * Schdedule Component
@@ -27,6 +28,8 @@ import {
  *   {"id": int,
 +     "number": string,
 +     "credit_hours": int,
+      "offered_winter": bool,
+      "offered_summer": bool,
 +     "prerequisites": [],
 +     "corequisites": []
 +    } 
@@ -50,7 +53,16 @@ const Schedule = ({ plan, onPlanChange }) => {
     })
   );
 
-   
+  // Memoize the plan to ensure immutability
+  const memoizedPlan = useMemo(() => cloneDeep(plan), [plan]);
+
+  // Memoize Year components
+  const memoizedYears = useMemo(() => {
+    return Object.entries(memoizedPlan).map(([yearKey, sessions]) => (
+      <Year key={yearKey} yearKey={yearKey} sessions={cloneDeep(sessions)} />
+    ));
+  }, [memoizedPlan]);
+
   // Handle drag-and-drop event for DraggableCourse
   // must be async to use in context of prerequisite validation
   const handleDragEnd = async (event) => {
@@ -92,7 +104,7 @@ const Schedule = ({ plan, onPlanChange }) => {
     console.log(`📦 Moving "${active.id}" from ${fromYear}-${fromSession} ➡️ ${toYear}-${toSession}`);
     // Update the plan by moving the course to the new position
     // Deep clone the current plan to prevent mutation of the original object
-    const updatedPlan = cloneDeep(plan)
+    const updatedPlan = cloneDeep(memoizedPlan);
 
     // Verify that source and target sessions exist in the plan
     if (!updatedPlan[fromYear] || !updatedPlan[fromYear][fromSession]) {
@@ -104,9 +116,8 @@ const Schedule = ({ plan, onPlanChange }) => {
       return;
     }
 
-    // Find index of dragged course (course tuple) in the source session
+    // Find index of dragged course  in the source session
     const sourceCourses = updatedPlan[fromYear][fromSession];
-    
     const sourceIndex = sourceCourses.findIndex(
       (course) => String(course.id) === courseId
     );
@@ -116,16 +127,29 @@ const Schedule = ({ plan, onPlanChange }) => {
     }
 
     // Deep clone the moved course 
-    const [movedCourse] = sourceCourses.splice(sourceIndex, 1);
-    
+    const movedCourse = cloneDeep(sourceCourses[sourceIndex]);
+    sourceCourses.splice(sourceIndex, 1);
+
     // Before updating the plan, check that prerequisites and corequisites are present
     // Deep clone possible dependent courses
-    const previousSessionCourses = cloneDeep(getCoursesUpTo(updatedPlan, toYear, toSession, false));
-    const currAndPrevSessionCourses = cloneDeep(getCoursesUpTo(updatedPlan, toYear, toSession, true));
+    const previousSessionCourses = cloneDeep(getCoursesUpTo(memoizedPlan, toYear, toSession, false));
+    const currAndPrevSessionCourses = cloneDeep(getCoursesUpTo(memoizedPlan, toYear, toSession, true));
+    const targetSession = toSession.toUpperCase();
 
-    const validDrop = await validateCourseDrop(movedCourse, previousSessionCourses, currAndPrevSessionCourses);
+    const validDrop = await validateCourseDrop(
+      movedCourse,
+      previousSessionCourses,
+      currAndPrevSessionCourses,
+      targetSession);
+
     if (!validDrop) {
-      alert("Moving this course would violate one or more prerequisites or corequisites.")
+      if (targetSession === "SUMMER" && !movedCourse.offered_summer) {
+        alert("Course not offered in summer. Please reschedule");
+      } else if (targetSession === "WINTER" && !movedCourse.offered_winter) {
+        alert("Course not offered in winter. Please reschedule");
+      } else {
+        alert("Moving this course would violate one or more prerequisites or corequisites.")
+      }
       return;
     }
     const dependencyViolated = await checkDependencyViolation(updatedPlan, toYear, toSession, movedCourse);
@@ -133,7 +157,7 @@ const Schedule = ({ plan, onPlanChange }) => {
       alert("Moving this course would violate one or more prerequisites or corequisites.")
       return;
     }
-    
+
     // Append course to target session if both checks pass
     updatedPlan[toYear][toSession].push(cloneDeep(movedCourse));
     // Update plan state with new arrangement
@@ -145,6 +169,8 @@ const Schedule = ({ plan, onPlanChange }) => {
     return <p>Choose a major to see its schedule.</p>;
   }
 
+
+
   console.log("📦 Received plan:", plan);
 
   return (
@@ -153,15 +179,7 @@ const Schedule = ({ plan, onPlanChange }) => {
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}>
       <div className="schedule">
-        {/*
-        Iterate over each year in the plan.
-        Object.entries(plan) returns an array of [yearKey, sessions] pairs.
-        For each year, render a Year component:
-        - the key prop is set to yearKey for React's internal use
-        - yearKey and sessions are passed a props*/}
-        {Object.entries(plan).map(([yearKey, sessions]) => (
-          <Year key={yearKey} yearKey={yearKey} sessions={cloneDeep(sessions)} />
-        ))}
+        {memoizedYears}
       </div>
     </DndContext>
   );

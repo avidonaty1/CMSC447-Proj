@@ -22,9 +22,7 @@ import "./DraggableCourse.css";
  */
 
 const DraggableCourse = ({ course, semester, onClick }) => {
-    // Course is expected to be a tuple: [courseId, courseNumber]
-
-
+    
     // Create an id in the format: "year-session-courseId"
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: `${semester}-${course.id}`, 
@@ -57,6 +55,8 @@ const DraggableCourse = ({ course, semester, onClick }) => {
       id: PropTypes.number.isRequired,
       number: PropTypes.string.isRequired,
       credit_hours: PropTypes.number.isRequired,
+      offered_winter: PropTypes.bool.isRequired,
+      offered_summer: PropTypes.bool.isRequired,
       prerequisites: PropTypes.arrayOf(PropTypes.number).isRequired,
       corequisites: PropTypes.arrayOf(PropTypes.number).isRequired,
     }).isRequired, 

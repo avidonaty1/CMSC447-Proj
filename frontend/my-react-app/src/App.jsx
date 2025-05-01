@@ -87,6 +87,7 @@ function App() {
 
       if (studentId > 0) {
         const emptyNestedPlan = {
+          year0: { PastCoursework: []},
           year1: { Fall: [], Winter: [], Spring: [], Summer: [] },
           year2: { Fall: [], Winter: [], Spring: [], Summer: [] },
           year3: { Fall: [], Winter: [], Spring: [], Summer: [] },

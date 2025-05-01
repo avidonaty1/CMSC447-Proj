@@ -140,7 +140,8 @@ const Schedule = ({ plan, onPlanChange }) => {
       movedCourse,
       previousSessionCourses,
       currAndPrevSessionCourses,
-      targetSession);
+      targetSession,
+      updatedPlan);
 
     if (!validDrop) {
       if (targetSession === "SUMMER" && !movedCourse.offered_summer) {

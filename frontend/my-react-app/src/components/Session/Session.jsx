@@ -25,7 +25,7 @@ import "./Session.css";
 const Session = ({ semester, session_title, courses }) => {
     // State to keep track of selected course for popup details
     const [selectedCourse, setSelectedCourse] = useState(null);
-    
+
     // State to keep track of alert for excess credit
     const [alertDisplayed, setAlertDisplayed] = useState(false);
 
@@ -63,13 +63,15 @@ const Session = ({ semester, session_title, courses }) => {
         }
     }, [totalCredits, upperCaseTitle, alertDisplayed]);
 
-    
+
 
 
     return (
         <>
             <div className="session">
-                <div className="session-name" >{session_title}</div>
+                {session_title !== "PAST COURSEWORK" && (
+                    <div className="session-name">{session_title}</div>
+                )}
                 <div
                     ref={setNodeRef}
                     className={`session-courses ${isOver ? 'droppable-over' : ''}`}>

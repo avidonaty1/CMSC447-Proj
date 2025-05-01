@@ -20,32 +20,42 @@ import "./Year.css";
  * and a list of Session components
  */
 const Year = ({ yearKey, sessions }) => {
-  // want yearKey to display as YEAR 1
-  const displayYear = `${yearKey.slice(0,4)} ${yearKey.slice(4)}`.toUpperCase();
+  // want yearKey to display as YEAR 1 for standard years and 
+  // differently for year 0
+  const displayYear =
+    yearKey === "year0" ? "PAST COURSEWORK" : `${yearKey.slice(0, 4)} ${yearKey.slice(4)}`.toUpperCase();
 
   // Create a deep clone to ensure immutability
   const memoizedSessions = useMemo(() => cloneDeep(sessions), [sessions]);
-    return (
-        <div className="schedule-year">
-        <h3 className="schedule-year-title">{displayYear}</h3>
-        <div className="schedule-sessions">
-          {Object.entries(memoizedSessions).map(([sessionKey, courses]) => (
+  return (
+    <div className={`schedule-year ${yearKey === "year0" ? "past-coursework-year" : ""} `}>
+      <h3 className="schedule-year-title">{displayYear}</h3>
+      <div className={`schedule-sessions ${yearKey === "year0" ? "past-coursework-sessions" : ""}`}>
+        {yearKey === "year0" ? (
+          <Session
+            semester={`${yearKey}-PastCoursework`}
+            session_title="PAST COURSEWORK"
+            courses={cloneDeep(Object.values(memoizedSessions).flat())}
+          />
+        ) : (
+          Object.entries(memoizedSessions).map(([sessionKey, courses]) => (
             <Session
               key={sessionKey}
               semester={`${yearKey}-${sessionKey}`}
               session_title={sessionKey.toUpperCase()}
               courses={cloneDeep(courses)}
             />
-          ))}
-        </div>
+          ))
+        )}
       </div>
-    );
+    </div>
+  );
 };
 
 // PropTypes for type safety
 Year.propTypes = {
-    yearKey: PropTypes.string.isRequired,
-    sessions: PropTypes.object.isRequired,
+  yearKey: PropTypes.string.isRequired,
+  sessions: PropTypes.object.isRequired,
 };
 
 export default Year;

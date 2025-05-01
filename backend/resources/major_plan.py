@@ -25,6 +25,9 @@ class MajorPlan(Resource):
     {
       "major_id": 1,
       "default_plan": {
+        "year0": {
+        "Past Coursework": []
+        }
         "year1": {
           "Fall": []
             {"id": 101,

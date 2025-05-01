@@ -11,6 +11,7 @@ def build_nested_plan(plan):
               an array of course objects
     """
     nested_plan = {
+        "year0": {"PastCoursework": []},
         "year1": {"Fall": [], "Winter": [], "Spring": [], "Summer": []},
         "year2": {"Fall": [], "Winter": [], "Spring": [], "Summer": []},
         "year3": {"Fall": [], "Winter": [], "Spring": [], "Summer": []},

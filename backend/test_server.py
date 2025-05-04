@@ -21,7 +21,7 @@ def test_get_all_majors():
 
 
 # runs the test once for each major_id (currently just 1 and 2)
-@pytest.mark.parametrize("major_id", [1, 2])
+@pytest.mark.parametrize("major_id", [major.value for major in sample_data.Major])
 def test_major_plan(major_id):
     response = app.test_client().get(f'/api/v2/majors/{str(major_id)}/plan')
     
@@ -39,7 +39,7 @@ def test_major_plan(major_id):
 
 
 # runs the test for each course id in sample data
-@pytest.mark.parametrize("course_id", [id for id in range(101, 108)])
+@pytest.mark.parametrize("course_id", [id.value for id in sample_data.Course])
 def test_course_info(course_id):
     response = app.test_client().get(f'/api/v2/courses/{str(course_id)}')
 
@@ -50,15 +50,15 @@ def test_course_info(course_id):
 
         prerequisites = response.get_json().get("prerequisites")
         corequisites = response.get_json().get("corequisites")
-        assert type(prerequisites) == list
-        assert type(corequisites) == list
+        assert type(prerequisites) is list
+        assert type(corequisites) is list
 
     except (KeyError, TypeError, AssertionError, json.JSONDecodeError) as e:
         pytest.fail(f"Failed to process /api/v2/courses/{str(course_id)}: {e}")
 
 
 # runs the test for each course id in sample data
-@pytest.mark.parametrize("course_id", [id for id in range(101, 108)])
+@pytest.mark.parametrize("course_id", [id.value for id in sample_data.Course])
 def test_course_requirements(course_id):
     response = app.test_client().get(f'/api/v2/courses/{str(course_id)}/requirements')
 
@@ -68,10 +68,46 @@ def test_course_requirements(course_id):
         prerequisites = response.get_json().get("prerequisites")
         corequisites = response.get_json().get("corequisites")
 
-        assert type(prerequisites) == list
-        assert type(corequisites) == list
+        assert type(prerequisites) is list
+        assert type(corequisites) is list
         assert course["prerequisites"] == prerequisites
         assert course["corequisites"] == corequisites
 
     except (KeyError, TypeError, AssertionError, json.JSONDecodeError) as e:
         pytest.fail(f"Failed to process /api/v2/courses/{str(course_id)}/requirements: {e}")
+
+
+# tests for each student
+@pytest.mark.parametrize("email", [i["email"] for i in sample_data.students])
+def test_student_email(email):
+    response = app.test_client().get(f'/api/v2/students/email/{str(email)}')
+
+    try:
+        assert response.status_code == 200
+        student = next((s for s in sample_data.students if s["email"] == email), None)
+        student_id = response.get_json().get("student_id")
+        assert type(student_id) is int
+        assert student["_id"] == student_id
+
+    except (KeyError, TypeError, AssertionError, json.JSONDecodeError) as e:
+        pytest.fail(f"Failed to process /api/v2/students/email/{str(email)}: {e}")
+
+# tests for each student
+@pytest.mark.parametrize("_id", [i["_id"] for i in sample_data.students])
+def test_student_major(_id):
+    response = app.test_client().get(f'/api/v2/students/{str(_id)}/major')
+
+    try:
+        assert response.status_code == 200
+        student = next((s for s in sample_data.students if s["_id"] == _id), None)
+        student_id = response.get_json().get("student_id")
+        major_id = response.get_json().get("major_id")
+        assert student_id == _id
+        assert major_id == student["major_id"]
+
+    except (KeyError, TypeError, AssertionError, json.JSONDecodeError) as e:
+        pytest.fail(f"Failed to process /api/v2/students/{str(_id)}/major: {e}")
+
+
+
+# def test_student_plan():

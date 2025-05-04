@@ -51,9 +51,12 @@ const Schedule = ({ plan, onPlanChange }) => {
   const handleDragEnd = async (event) => {
     const { active, over } = event;
 
-    console.log("🎯 Drag Event Triggered");
-    console.log("Active (dragged):", active.id);
-    console.log("Over (dropped onto):", over?.id);
+    // console.log("🎯 Drag Event Triggered");
+    // console.log("Active (dragged):", active.id);
+    // console.log("Over (dropped onto):", over?.id);
+
+    console.log("Dropped on:", over?.id); // should log like "year1-FALL"
+
 
     // Ensure target is valid and not the same as the source
     if (!over || active.id === over.id) {

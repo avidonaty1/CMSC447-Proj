@@ -8,6 +8,12 @@ import Schedule from "./components/Schedule/Schedule.jsx";
 import Instructions from "./Instructions.jsx";
 import SearchMajor from "./components/SearchMajor/SearchMajor.jsx";
 import Login from "./components/LoginPage/Login.jsx";
+// import Print from "./Print.jsx"; // Ensure this import is correct
+
+
+// import pawImage from "./assets/umbc-official-paw-variations.eps.jpg";
+// import Paws from "./Paws.jsx";
+
 
 function App() {
   // State to store the studentId (or 0 if Guest)
@@ -38,6 +44,7 @@ function App() {
 
         // Fetch student's major from API
         const response = await axios.get(`/api/v2/students/${studentId}/major`);
+        // const response = await axios.get(`http://127.0.0.1:5000/api/v2/students/${studentId}/major`);
         setSelectedMajor(response.data.major_id);
         setError(null);
         console.log("Fetched student's major:", response.data.major_id);
@@ -57,7 +64,8 @@ function App() {
         // Skip if logged in as Guest
         if (studentId === 0 || studentId === null) return;
         // Fetch student's major from API
-        const response = await axios.get(`/api/v2/students/${studentId}/plan`);
+        // const response = await axios.get(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`);
+        const response = await axios.get(`api/v2/students/${studentId}/plan`);
         setMajorPlan(response.data.custom_plan);
         setError(null);
         console.log("Fetched student's plan:", response.data.custom_plan);
@@ -86,7 +94,9 @@ function App() {
         };
 
         try {
+          // const response = await axios.post(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`, { custom_plan: emptyNestedPlan});
           const response = await axios.post(`/api/v2/students/${studentId}/plan`, { custom_plan: emptyNestedPlan});
+
           console.log("Student's plan reset to empty nested plan:", response.data)
         } catch (error){
           console.error("Error resetting student's plan:", error);
@@ -103,7 +113,9 @@ function App() {
     if (studentId > 0) {
       // Update backend if user is a student
       try {
+        // const response = await axios.post(`http://127.0.0.1:5000/api/v2/students/${studentId}/major`, { major_id: major._id });
         const response = await axios.post(`/api/v2/students/${studentId}/major`, { major_id: major._id });
+
         setSelectedMajor(major._id);
         console.log("Student's major updated successfully:", response.data);
       } catch (error) {
@@ -125,7 +137,9 @@ function App() {
     // Update backend if user is a student
     if (studentId > 0) {
       try {
+        // const response = await axios.post(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`, { custom_plan: newPlan });
         const response = await axios.post(`/api/v2/students/${studentId}/plan`, { custom_plan: newPlan });
+
 
         console.log("Student's plan updated successfully:", response.data);
       } catch (error) {
@@ -147,6 +161,7 @@ function App() {
         // Fetch data from API endpoint
         console.log("Fetching plan for major:", selectedMajor);
 
+        // const response = await axios.get(`http://127.0.0.1:5000/api/v2/majors/${majorId}/plan`);
         const response = await axios.get(`/api/v2/majors/${majorId}/plan`);
         setMajorPlan(response.data);
         setError(null);
@@ -163,35 +178,46 @@ function App() {
 
   return (
     <>
+
+      {/* <Login onLogin={handleLogin} /> */}
+    
       <div className="app-container">
-        {/* Show Login if no studentId is set */}
         {studentId === null ? (
           <Login onLogin={handleLogin} />
         ) : (
           <>
+
+
+            
             <Header />
             <Instructions />
 
             <SearchMajor onMajorSelect={handleMajorSelect} />
 
-            {/* Error Message */}
             {error && <p className="error-message">{error}</p>}
 
-            {/* Render Schedule with drag-and-drop context */}
             {selectedMajor && majorPlan && (
               <>
-                <h2 className="title-of-scheduler"> Personal {selectedMajor.name} 4 Year Plan</h2>
                 <Schedule
-                  // fallback in case defaultPlan is missing or malformed
                   plan={majorPlan?.default_plan || {}}
                   onPlanChange={handlePlanChange}
                 />
               </>
             )}
+
+            {/* <Print 
+            plan={majorPlan?.default_plan || {}} 
+            onPlanChange={handlePlanChange} 
+            /> */}
+
+
+            <Footer />
             <Footer />
           </>
         )}
       </div>
+
+
     </>
   );
 }

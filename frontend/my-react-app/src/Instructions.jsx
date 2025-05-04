@@ -1,4 +1,4 @@
-function instructions(){
+function Instructions(){
     return(
 
         <p className="instructions">
@@ -14,4 +14,4 @@ function instructions(){
     ) 
 }
 
-export default instructions;
+export default Instructions;

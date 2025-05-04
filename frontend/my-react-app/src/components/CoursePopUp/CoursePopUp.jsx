@@ -30,6 +30,7 @@ const CoursePopUp = ({ courseId, onClose }) => {
 
   // Fetches the course info from the API endpoint
   // and populates the courseDetals state
+  // .get(`http://127.0.0.1:5000/api/v2/courses/${courseId}`)
   useEffect(() => {
     axios
       .get(`/api/v2/courses/${courseId}`)
@@ -64,7 +65,7 @@ const CoursePopUp = ({ courseId, onClose }) => {
             {courseDetails.offered_summer ? "Yes" : "No"}</p>
             <p><strong>Prerequisites:</strong> {courseDetails.prerequisites.join(', ') || 'None'}</p>
             <p><strong>Corequisites:</strong> {courseDetails.corequisites.join(', ') || 'None'}</p>
-            <p><stong>Advisor Notes:</stong> {courseDetails.advisor_notes}</p>
+            <p><strong>Advisor Notes:</strong> {courseDetails.advisor_notes}</p>
           </>
         )}
       </div>

@@ -4,12 +4,14 @@
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
+  margin-bottom: 50px;  
+}
 
-
-  margin-bottom: 50px;
-
-
-  
+.past-coursework-year {
+  background-color: lightgray;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 15px;
 }
 
 .schedule-year-title{
@@ -22,7 +24,6 @@
   padding: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
-
   border: 2px solid wheat;
 }
 
@@ -33,6 +34,25 @@
   justify-content: center;
   width: 100%;
 }
+.past-coursework-sessions {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  justify-items: center;
+}
+
+.past-coursework-sessions .session {
+  width: 100%;
+}
+.past-coursework-sessions .session-courses {
+  gap: 8px;
+}
+
+.past-coursework-sessions .course {
+  width: 100%;
+  margin: 0 auto;
+}
 
   /* On a narrower screen, force a 2-column grid */
   @media (max-width: 768px) {
@@ -42,5 +62,13 @@
       gap: 10px;
       width: 100%;
       justify-content: center;
+    }
+
+    .past-coursework-sessions {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .past-coursework-sessions .draggable-course {
+      max-width: 100%;
     }
   }

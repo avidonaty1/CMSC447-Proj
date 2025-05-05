@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import { cloneDeep } from "lodash";
 // Components
 import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
@@ -66,7 +66,7 @@ function App() {
         // Fetch student's major from API
         // const response = await axios.get(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`);
         const response = await axios.get(`api/v2/students/${studentId}/plan`);
-        setMajorPlan(response.data.custom_plan);
+        setMajorPlan(cloneDeep(response.data.custom_plan));
         setError(null);
         console.log("Fetched student's plan:", response.data.custom_plan);
       } catch (error) {
@@ -87,18 +87,21 @@ function App() {
 
       if (studentId > 0) {
         const emptyNestedPlan = {
-          year1: {Fall: [], Winter: [], Spring: [], Summer: []},
-          year2: {Fall: [], Winter: [], Spring: [], Summer: []},
-          year3: {Fall: [], Winter: [], Spring: [], Summer: []},
-          year4: {Fall: [], Winter: [], Spring: [], Summer: []},
+          year0: { PastCoursework: []},
+          year1: { Fall: [], Winter: [], Spring: [], Summer: [] },
+          year2: { Fall: [], Winter: [], Spring: [], Summer: [] },
+          year3: { Fall: [], Winter: [], Spring: [], Summer: [] },
+          year4: { Fall: [], Winter: [], Spring: [], Summer: [] },
         };
 
         try {
           // const response = await axios.post(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`, { custom_plan: emptyNestedPlan});
-          const response = await axios.post(`/api/v2/students/${studentId}/plan`, { custom_plan: emptyNestedPlan});
+          const response = await axios.post(`/api/v2/students/${studentId}/plan`, {
+            custom_plan: cloneDeep(emptyNestedPlan),
+          });
 
           console.log("Student's plan reset to empty nested plan:", response.data)
-        } catch (error){
+        } catch (error) {
           console.error("Error resetting student's plan:", error);
           setError("Failed to reset student's plan");
         }
@@ -109,7 +112,7 @@ function App() {
     console.log("Selected Major:", major);
     // Update the local state whether it is student or guest
     setSelectedMajor(major._id);
-    
+
     if (studentId > 0) {
       // Update backend if user is a student
       try {
@@ -131,15 +134,22 @@ function App() {
   const handlePlanChange = async (newPlan) => {
     console.log("Updating plan:", newPlan);
 
-    // Always update the local state with merging
-    setMajorPlan((prev) => ({ ...prev, default_plan: newPlan }));
+    // Deep clone to protect against mutation
+    const clonedNewPlan = cloneDeep(newPlan);
+
+    // Always update the local state with merging and deep cloning
+    setMajorPlan((prev) => ({
+      ...cloneDeep(prev), 
+      default_plan: clonedNewPlan,
+    }));
 
     // Update backend if user is a student
     if (studentId > 0) {
       try {
         // const response = await axios.post(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`, { custom_plan: newPlan });
-        const response = await axios.post(`/api/v2/students/${studentId}/plan`, { custom_plan: newPlan });
-
+        const response = await axios.post(`/api/v2/students/${studentId}/plan`, {
+          custom_plan: clonedNewPlan,
+        });
 
         console.log("Student's plan updated successfully:", response.data);
       } catch (error) {
@@ -163,7 +173,7 @@ function App() {
 
         // const response = await axios.get(`http://127.0.0.1:5000/api/v2/majors/${majorId}/plan`);
         const response = await axios.get(`/api/v2/majors/${majorId}/plan`);
-        setMajorPlan(response.data);
+        setMajorPlan(cloneDeep(response.data));
         setError(null);
         console.log("Fetched default plan");
       } catch (error) {
@@ -180,7 +190,7 @@ function App() {
     <>
 
       {/* <Login onLogin={handleLogin} /> */}
-    
+
       <div className="app-container">
         {studentId === null ? (
           <Login onLogin={handleLogin} />
@@ -188,7 +198,7 @@ function App() {
           <>
 
 
-            
+
             <Header />
             <Instructions />
 
@@ -210,8 +220,6 @@ function App() {
             onPlanChange={handlePlanChange} 
             /> */}
 
-
-            <Footer />
             <Footer />
           </>
         )}

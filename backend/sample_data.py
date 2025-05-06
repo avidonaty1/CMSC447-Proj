@@ -218,4 +218,10 @@ students = [
         "major_id": Major.CMSC_GATEWAY.value,
         "custom_plan": {}
     },
+    {
+        "_id": 1001,
+        "email": "cdollo1@umbc.edu",
+        "major_id": Major.ENME_GATEWAY.value,
+        "custom_plan": {}
+    },
 ]

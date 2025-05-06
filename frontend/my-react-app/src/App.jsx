@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // Components
@@ -9,15 +10,17 @@ import Instructions from "./Instructions.jsx";
 import SearchMajor from "./components/SearchMajor/SearchMajor.jsx";
 import Login from "./components/LoginPage/Login.jsx";
 // import Print from "./Print.jsx"; // Ensure this import is correct
-
-
 // import pawImage from "./assets/umbc-official-paw-variations.eps.jpg";
 // import Paws from "./Paws.jsx";
 
 
 function App() {
   // State to store the studentId (or 0 if Guest)
-  const [studentId, setStudentId] = useState(null);
+  const [studentId, setStudentId] = useState(() => {
+    const saved = localStorage.getItem("studentId");
+    return saved !== null ? parseInt(saved, 10) : null;
+  });
+  
 
   // State to store the selected major from dropdown
   const [selectedMajor, setSelectedMajor] = useState(null);
@@ -29,32 +32,46 @@ function App() {
   const [error, setError] = useState(null);
 
   // Handle login (guest or as student with an account / email registered)
+  const navigate = useNavigate();
+
   const handleLogin = (id) => {
     setStudentId(id);
+    localStorage.setItem("studentId", id);
     setSelectedMajor(null);
     setMajorPlan(null);
-  }
+    navigate("/app");
+  };
+
+  // handle student logout
+  const handleLogout = () => {
+    setStudentId(null);
+    localStorage.removeItem("studentId");
+    setSelectedMajor(null);
+    setMajorPlan(null);
+    navigate("/login");
+  };
+  
+
 
   // Fetch the student's major after login
   useEffect(() => {
-    const fetchStudentMajor = async () => {
+    const fetchStudentPlan = async () => {
       try {
-        // Skip if logged in as Guest
-        if (studentId === 0 || studentId === null) return;
-
-        // Fetch student's major from API
-        const response = await axios.get(`/api/v2/students/${studentId}/major`);
-        // const response = await axios.get(`http://127.0.0.1:5000/api/v2/students/${studentId}/major`);
-        setSelectedMajor(response.data.major_id);
+        if (studentId === 0 || studentId === null || !selectedMajor) return;
+  
+        const response = await axios.get(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`);
+        setMajorPlan(response.data.custom_plan);
         setError(null);
-        console.log("Fetched student's major:", response.data.major_id);
+        console.log("Fetched student's plan:", response.data.custom_plan);
       } catch (error) {
-        console.error("Error fetching student's major", error);
-        setError("Failed to fetch student's major.");
+        console.error("Error fetching student's plan", error);
+        setError("Failed to fetch student's plan.");
       }
     };
-    fetchStudentMajor();
-  }, [studentId]);
+  
+    fetchStudentPlan();
+  }, [studentId, selectedMajor]); // 👈 wait until major is loaded too
+  
 
 
   // Fetch student's custom plan after login
@@ -64,8 +81,8 @@ function App() {
         // Skip if logged in as Guest
         if (studentId === 0 || studentId === null) return;
         // Fetch student's major from API
-        // const response = await axios.get(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`);
-        const response = await axios.get(`api/v2/students/${studentId}/plan`);
+        const response = await axios.get(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`);
+        // const response = await axios.get(`api/v2/students/${studentId}/plan`);
         setMajorPlan(response.data.custom_plan);
         setError(null);
         console.log("Fetched student's plan:", response.data.custom_plan);
@@ -94,8 +111,8 @@ function App() {
         };
 
         try {
-          // const response = await axios.post(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`, { custom_plan: emptyNestedPlan});
-          const response = await axios.post(`/api/v2/students/${studentId}/plan`, { custom_plan: emptyNestedPlan});
+          const response = await axios.post(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`, { custom_plan: emptyNestedPlan});
+          // const response = await axios.post(`/api/v2/students/${studentId}/plan`, { custom_plan: emptyNestedPlan});
 
           console.log("Student's plan reset to empty nested plan:", response.data)
         } catch (error){
@@ -113,8 +130,8 @@ function App() {
     if (studentId > 0) {
       // Update backend if user is a student
       try {
-        // const response = await axios.post(`http://127.0.0.1:5000/api/v2/students/${studentId}/major`, { major_id: major._id });
-        const response = await axios.post(`/api/v2/students/${studentId}/major`, { major_id: major._id });
+        const response = await axios.post(`http://127.0.0.1:5000/api/v2/students/${studentId}/major`, { major_id: major._id });
+        // const response = await axios.post(`/api/v2/students/${studentId}/major`, { major_id: major._id });
 
         setSelectedMajor(major._id);
         console.log("Student's major updated successfully:", response.data);
@@ -137,8 +154,8 @@ function App() {
     // Update backend if user is a student
     if (studentId > 0) {
       try {
-        // const response = await axios.post(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`, { custom_plan: newPlan });
-        const response = await axios.post(`/api/v2/students/${studentId}/plan`, { custom_plan: newPlan });
+        const response = await axios.post(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`, { custom_plan: newPlan });
+        // const response = await axios.post(`/api/v2/students/${studentId}/plan`, { custom_plan: newPlan });
 
 
         console.log("Student's plan updated successfully:", response.data);
@@ -161,8 +178,8 @@ function App() {
         // Fetch data from API endpoint
         console.log("Fetching plan for major:", selectedMajor);
 
-        // const response = await axios.get(`http://127.0.0.1:5000/api/v2/majors/${majorId}/plan`);
-        const response = await axios.get(`/api/v2/majors/${majorId}/plan`);
+        const response = await axios.get(`http://127.0.0.1:5000/api/v2/majors/${majorId}/plan`);
+        // const response = await axios.get(`/api/v2/majors/${majorId}/plan`);
         setMajorPlan(response.data);
         setError(null);
         console.log("Fetched default plan");
@@ -179,43 +196,39 @@ function App() {
   return (
     <>
 
-      {/* <Login onLogin={handleLogin} /> */}
-    
-      <div className="app-container">
-        {studentId === null ? (
-          <Login onLogin={handleLogin} />
-        ) : (
-          <>
+      <Routes>
+        <Route
+          path="/login"
+          element={<Login onLogin={handleLogin} />}
+        />
 
+        <Route
+          path="/app"
+          element={
+            studentId !== null ? (
+              <div className="app-container">
+                <Header />
+                <button onClick={handleLogout}>Logout</button>
+                <Instructions />
+                <SearchMajor onMajorSelect={handleMajorSelect} />
+                {error && <p className="error-message">{error}</p>}
+                {selectedMajor && majorPlan && (
+                  <Schedule
+                    plan={majorPlan?.default_plan || {}}
+                    onPlanChange={handlePlanChange}
+                  />
+                )}
+                <Footer />
+              </div>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
 
-            
-            <Header />
-            <Instructions />
-
-            <SearchMajor onMajorSelect={handleMajorSelect} />
-
-            {error && <p className="error-message">{error}</p>}
-
-            {selectedMajor && majorPlan && (
-              <>
-                <Schedule
-                  plan={majorPlan?.default_plan || {}}
-                  onPlanChange={handlePlanChange}
-                />
-              </>
-            )}
-
-            {/* <Print 
-            plan={majorPlan?.default_plan || {}} 
-            onPlanChange={handlePlanChange} 
-            /> */}
-
-
-            <Footer />
-            <Footer />
-          </>
-        )}
-      </div>
+        {/* Fallback route */}
+        <Route path="*" element={<Navigate to={studentId ? "/app" : "/login"} />} />
+      </Routes>
 
 
     </>

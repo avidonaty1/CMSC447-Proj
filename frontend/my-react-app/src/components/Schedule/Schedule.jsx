@@ -139,6 +139,33 @@ const Schedule = ({ plan, onPlanChange }) => {
 
   console.log("📦 Received plan:", plan);
 
+  // handleAddYear
+  // add an extra year to the plan
+  const handleAddYear = () => {
+    // Clone the existing plan
+    const updatedPlan = JSON.parse(JSON.stringify(plan));
+  
+    // Determine the next year key: find the highest "yearX"
+    const currentYears = Object.keys(updatedPlan);
+    const yearNumbers = currentYears
+      .map((key) => parseInt(key.replace("year", ""), 10))
+      .filter((num) => !isNaN(num));
+    const maxYear = Math.max(...yearNumbers);
+    const nextYear = `year${maxYear + 1}`;
+  
+    // Define an empty structure for the new year
+    updatedPlan[nextYear] = {
+      Fall: [],
+      Winter: [],
+      Spring: [],
+      Summer: []
+    };
+  
+    // Update state (and backend if student)
+    onPlanChange(updatedPlan);
+  };
+  
+
   return (
 
     <DndContext sensors={sensors}
@@ -154,6 +181,15 @@ const Schedule = ({ plan, onPlanChange }) => {
         {Object.entries(plan).map(([yearKey, sessions]) => (
           <Year key={yearKey} yearKey={yearKey} sessions={sessions} />
         ))}
+
+        <div className="add-year-container">
+        <button onClick={handleAddYear} className="add-year-button">
+          + Add year
+        </button>
+
+        </div>
+
+        
       </div>
     </DndContext>
   );

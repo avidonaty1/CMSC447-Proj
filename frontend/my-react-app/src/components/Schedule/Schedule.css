@@ -4,6 +4,35 @@
     margin: 0 auto;
     background-color: white;
     padding: 20px;
+
+    /* display: flex; */
+  }
+
+.add-year-button {
+
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0 auto;
+  background-color: white; 
+  color: rgb(84, 83, 83);;
+  border-radius: 30px;
+
+  width: 300px;
+  height: 3rem;
+  
+  cursor: pointer;
+  border: 3px solid #f6b93b;
+  }
+
+  .add-year-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    margin: 1rem 0;
+  }
+  
+  .add-year-button:hover {
+    background-color: #f6b93b;
+    color: white;
   }
 
 

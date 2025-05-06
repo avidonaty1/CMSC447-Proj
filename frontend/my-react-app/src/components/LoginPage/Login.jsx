@@ -23,8 +23,8 @@ function Login({ onLogin }) {
             }
 
             // Fetch student ID based on email
-            // const response = await axios.get(`http://127.0.0.1:5000/api/v2/students/email/${email}`);
-            const response = await axios.get(`/api/v2/students/email/${email}`);
+            const response = await axios.get(`http://127.0.0.1:5000/api/v2/students/email/${email}`);
+            // const response = await axios.get(`/api/v2/students/email/${email}`);
             const studentId = response.data.student_id;
 
             // Pass the studentId to the App

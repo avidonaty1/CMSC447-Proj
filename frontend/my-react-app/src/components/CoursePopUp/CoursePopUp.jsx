@@ -30,10 +30,10 @@ const CoursePopUp = ({ courseId, onClose }) => {
 
   // Fetches the course info from the API endpoint
   // and populates the courseDetals state
-  // .get(`http://127.0.0.1:5000/api/v2/courses/${courseId}`)
+  // .get(`/api/v2/courses/${courseId}`)
   useEffect(() => {
     axios
-      .get(`/api/v2/courses/${courseId}`)
+      .get(`http://127.0.0.1:5000/api/v2/courses/${courseId}`)
       .then((response) => {
         setCourseDetails(response.data);
       })

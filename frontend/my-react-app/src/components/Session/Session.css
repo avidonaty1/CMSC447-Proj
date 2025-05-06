@@ -2,7 +2,6 @@
   border: 2px solid black;
   font-size: var(--schedule-text-size);
   width: calc(25% - 10px);
-  /* min-width: calc(8ch + 20px); */
 
   min-height: 250px;
   margin-bottom: 20px;
@@ -37,6 +36,8 @@
   line-height: 38px;
   font-weight: 600;
 
+  
+
 
 }
 
@@ -44,6 +45,7 @@
 .session:nth-child(even){
   background-color: rgb(241, 241, 241); 
   border-left: 5px solid #f6b93b;
+  /* color: #f6b93b; */
 }
 
 .session:nth-child(even) .course{
@@ -52,7 +54,6 @@
 }
 
 .session:nth-child(odd){
-  
   background-color: #ffeaa7; 
   border-left: 5px solid #f6b93b;
 }

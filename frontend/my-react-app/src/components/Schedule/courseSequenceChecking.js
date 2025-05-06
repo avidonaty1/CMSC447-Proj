@@ -1,67 +1,62 @@
-import axios from "axios";
+import { cloneDeep } from "lodash";
 
 /**
  * These helper functions are used for course requirement checking
  * in the Schedule component so that dragged/dropped courses
  * do not violate the course sequence of prerequisites and corequisites.
  * 
- * NOTE: These functions need to be tested further as there are some
- * flaws noted in manual testing
+ * Course A is a prerequisite for Course B. Course C is a corequisite for Course B. 
+ * Course A cannot be placed after course B. 
+ * Course B cannot be placed before or level with Course A. 
+ * Course C cannot be placed after Course B. 
+ * Course B cannot be placed before Course C. 
+ * 
+ * NOTE: Manual testing shows good for these versions 
  */
 
 // Return an ordered array of session keys from the plan
 const getOrderedSessions = (plan) => {
-    const orderedSessions = [];
-    // sort year keys to guarantee ascending order
-    const yearKeys = Object.keys(plan).sort();
-    const sessionOrder = ["Fall", "Winter", "Spring", "Summer"];
-    yearKeys.forEach(year => {
-      sessionOrder.forEach(session => {
-        if (plan[year][session] !== undefined) {
-          orderedSessions.push({year, session});
-        }
-      });
+  const clonedPlan = cloneDeep(plan);
+  const orderedSessions = [];
+  // sort year keys to guarantee ascending order
+  const yearKeys = Object.keys(clonedPlan).sort();
+  const sessionOrder = ["PastCoursework", "Fall", "Winter", "Spring", "Summer"];
+  yearKeys.forEach(year => {
+    sessionOrder.forEach(session => {
+      if (clonedPlan[year]?.[session]) {
+        orderedSessions.push({ year, session });
+      }
     });
-    return orderedSessions;
+  });
+  return orderedSessions;
+};
+
+
+// Get all courses from sessions that come before (or up to) a target session
+// If includeTarget is false, only sessions strictly before
+const getCoursesUpTo = (plan, targetYear, targetSession, includeTarget = false) => {
+  const clonedPlan = cloneDeep(plan);
+  const orderedSessions = getOrderedSessions(clonedPlan);
+  const targetIndex = orderedSessions.findIndex(
+    s => s.year === targetYear && s.session === targetSession
+  );
+  // Return empty if target session is invalid
+  if (targetIndex === -1) return [];
+
+  const endIndex = includeTarget ? targetIndex + 1 : targetIndex;
+  const courses = [];
+
+  for (let i = 0; i < endIndex; i++) {
+    const { year, session } = orderedSessions[i];
+    clonedPlan[year][session]?.forEach(course => {
+      courses.push(cloneDeep(course));
+    });
   };
+  return courses;
+};
 
 
-  // Get all course IDs from sessions that come before (or up to) a target session
-  // If includeTarget is false, only sessions strictly before
-  const getCourseIdsUpTo = (plan, targetYear, targetSession, includeTarget = false) => {
-    const orderedSessions = getOrderedSessions(plan);
-    const targetIndex = orderedSessions.findIndex(
-      s => s.year === targetYear && s.session === targetSession
-    );
-    if (targetIndex === -1) return [];
-    const endIndex = includeTarget ? targetIndex + 1 : targetIndex;
-    const courseIds = [];
-    for (let i = 0; i < endIndex; i++) {
-      const { year, session } = orderedSessions[i];
-      plan[year][session].forEach(course => {
-        courseIds.push(Number(course[0]));
-      });
-    };
-    return courseIds;
-  };
-
-  // use this cache to map course IDs to their requirements
-  const requirementsCache = {};
-
-
-  /**
-   * getCourseRequirements fetches the course requirements while caching
-   * the result. This helper function is used in checkDependencyViolation
-   * and in validateCourseDrop
-   * 
-   * @param {number} courseId - The id of the course for which requirements are retrieved
-   */
-   async function getCourseRequirements(courseId) {
-    // If requirements have already been fetched, return
-    if (requirementsCache[courseId]){
-        return requirementsCache[courseId];
-    }
-
+<<<<<<< HEAD
     try {
       const response = await axios.get(`http://127.0.0.1:5000/api/v2/courses/${courseId}/requirements`);
       // const response = await axios.get(`/api/v2/courses/${courseId}/requirements`);
@@ -95,67 +90,141 @@ const getOrderedSessions = (plan) => {
       if (!requirements) {
         console.error(`Failed to retrieve requirements for course ${courseId}`);
         return false;
-      }
-      const {prerequisites, corequisites } = requirements;
+=======
+/**
+ * validateCourseDrop checks whether corequisites and prerequisites for the
+ * dropped course are present in the correct sequence.
+ * It also checks if a course can be added to winter or summer (if applicable).
+ * 
+ * @param {number} course - course being dropped
+ * @param {Array<course>} previousSessionCourses - All courses from previous sessions
+ * @param {Array<course>} currAndPrevSessionCourses - All courses up to / including target
+ * @param {string} toSession - The target session (i.e. FALL)
+ * @param {object} updatedPlan - The plan after the removal of the course
+ * 
+ * @returns {Promise<boolean>} - Resolves true if both requirements are met
+ */
+async function validateCourseDrop(movedCourse, previousSessionCourses, currAndPrevSessionCourses, toSession, updatedPlan) {
+  try {
+    // deconstruct the relevant properties from MovedCourse
+    const { prerequisites = [], corequisites = [], offered_winter, offered_summer } = movedCourse;
 
-      // Check that prerequisites and corequisites are met
-      const prerequisitesMet = prerequisites.every(reqId =>
-        previousSessionCourseIds.includes(reqId)
-      );
-      const corequisitesMet = corequisites.every(reqId =>
-        currAndPrevSessionCourseIds.includes(reqId)
-      );
+    // Handle past coursework
+    if (toSession === "PASTCOURSEWORK") {
+      const pastCoursework = updatedPlan["year0"]?.["PastCoursework"] || [];
+      // Prerequisites must already be in year0
+      for (const reqId of prerequisites) {
+        if (!pastCoursework.some((course) => course.id === reqId)) {
+          console.error(`Prerequisite ${reqId} for Course ${movedCourse.id} must also be in PastCoursework.`);
+          return false;
+        }
+>>>>>>> d0133b76e7a1a8a2003869144a1fdf4d970d4b9c
+      }
+      // Corequisites must already be in year0
+      for (const reqId of corequisites) {
+        if (!pastCoursework.some((course) => course.id === reqId)) {
+          console.error(`Corequisite ${reqId} for Course ${movedCourse.id} must also be in PastCoursework.`);
+          return false;
+        }
+      }
+    } else {
+      // Rule 1: Course A is a prerequisite for Course B
+      // Ensure all prerequisites for the course being dropped are present in previous sessions
+      for (const reqId of prerequisites) {
+        if (!previousSessionCourses.some((course => course.id === reqId))) {
+          console.error(`Prerequisite ${reqId} not satisfied for Course ${movedCourse.id}`);
+          return false;
+        }
+      }
+      // Rule 2: Course C is a corequisite for Course B
+      // Ensure all corequisites for the course being dropped are present in the target session or previous
+      for (const reqId of corequisites) {
+        if (!currAndPrevSessionCourses.some((course) => course.id === reqId)) {
+          console.error(`Corequisite ${reqId} not satisfied for Course ${movedCourse.id}`);
+          return false;
+        }
+      }
+    }
+    // Rule 1 and 2 satisfied
 
-      if (!prerequisitesMet) {
-        alert("Prequisites for this course are not met in previous sessions.");
-        return false;
-      }
-      if (!corequisitesMet) {
-        alert("Corequisites for this course are not met in current or previous sessions.");
-        return false;
-      }
-      // Otherwise, it is ok to drop the course
-      return true;
-    } catch (err) {
-      console.error("Error validating course drop:", err);
+    // Additional check: is the course offered in summer or winter
+    if (toSession === "SUMMER" && !offered_summer) {
+      console.error("Course not offered in summer");
       return false;
     }
+    if (toSession === "WINTER" && !offered_winter) {
+      console.error("Course not offered in winter");
+      return false;
+    }
+
+
+    return true;
+  } catch (err) {
+    console.error("Error validating course drop:", err);
+    return false;
   }
+}
 
 
-  /**
-   * checkRequirementViolation examines sessions before the target session
-   * to ensure none of the courses already scheduled there depend on the dropped course
-   * 
-   * @param {object} updatedPlan - The plan afte rthe removal of the course
-   * @param {string} targetYear - Target year for the dropped course
-   * @param {string} targetSession - Target session for the dropped course
-   * @param {number|string} droppedCourseId - The id of the course being moved
-   * 
-   * @returns {Promise<boolean} - Resolves to true if a dependency violation is found
-   */
-  async function checkDependencyViolation(updatedPlan, targetYear, targetSession, droppedCourseId) {
-    const orderedSessions = getOrderedSessions(updatedPlan);
-    const targetIndex = orderedSessions.findIndex(
-      (s) => s.year === targetYear && s.session === targetSession
-    );
-    if (targetIndex === -1) return false;
+/**
+ * checkRequirementViolation examines sessions before the target session
+ * to ensure none of the courses already scheduled there depend on the dropped course
+ * 
+ * @param {object} updatedPlan - The plan after the removal of the course
+ * @param {string} targetYear - Target year for the dropped course
+ * @param {string} targetSession - Target session for the dropped course
+ * @param {course} droppedCourse - Course being dropped
+ * 
+ * @returns {Promise<boolean>} - Resolves to true if a dependency violation is found
+ */
+async function checkDependencyViolation(updatedPlan, targetYear, targetSession, droppedCourse) {
+  const clonedPlan = cloneDeep(updatedPlan);
+  const orderedSessions = getOrderedSessions(clonedPlan);
+  const targetIndex = orderedSessions.findIndex(
+    (s) => s.year === targetYear && s.session === targetSession
+  );
+  if (targetIndex === -1) return false;
 
-    // Iterate over sessions that come before the target session
-    for (let i = 0; i < targetIndex; i++) {
-      const { year, session } = orderedSessions[i];
-      for (let courseTuple of updatedPlan[year][session]) {
-        // Fetch (or retrieve from cache) course requirements
-        const requirements = await getCourseRequirements(courseTuple[0]);
-        if (requirements && requirements.prerequisites.includes(Number(droppedCourseId))) {
+  // Skip validation for PastCoursework
+  if (targetSession === "PASTCOURSEWORK") {
+    console.log("No dependency violation checks needed for past coursework.");
+    return false;
+  }
+  
+  // Iterate over sessions up to the one where the course is dropped (inclusive)
+  for (let i = 0; i <= targetIndex; i++) {
+    const { year, session } = orderedSessions[i];
+    const courses = clonedPlan[year]?.[session] || [];
+
+    for (const course of courses) {
+      const { prerequisites = [], corequisites = [] } = course;
+      console.log("Prerequisites for dropped course:", prerequisites);
+      console.log("Corequisites for dropped course:", corequisites);
+      // Rule 3: Course A cannot be placed after Course B
+      // Check if the dropped course is a prerequisite for this course and verify the order
+      if (prerequisites.includes(droppedCourse.id) && i <= targetIndex) {
+        console.error(`Prerequisite rule violated: Course ${course.id} depends on ${droppedCourse.id}`);
+        return true;
+      }
+      // Rule 4: Course C cannot be placed after course B
+      if (corequisites.includes(droppedCourse.id)) {
+        if (i > targetIndex) {
+          console.error(`Corequisite rule violated: Course ${course.id} depends on ${droppedCourse.id}`);
+          return true;
+        }
+        if (i < targetIndex && !clonedPlan[orderedSessions[targetIndex].year]?.[orderedSessions[targetIndex].session]?.some(
+          (c) => c.id === droppedCourse.id)) {
+          console.error("Corequisite must be in same or earlier session");
           return true;
         }
       }
     }
-    return false;
   }
- 
-  export {getCourseIdsUpTo, validateCourseDrop, checkDependencyViolation};
+  // No dependency violations found
+  return false;
+}
+
+export { getCoursesUpTo, validateCourseDrop, checkDependencyViolation };
 
 
 

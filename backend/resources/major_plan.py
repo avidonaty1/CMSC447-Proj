@@ -11,7 +11,13 @@ class MajorPlan(Resource):
 
     Returns:
     - The major id, and a nested plan organized by years and sessions containing courses.
-    - The courses are tuples (course._id, course.number) which when returned via 
+    - The courses are dictopnaries with key-value pairs:
+    id-course.id
+    number-course.number
+    offered_winter-course.offered_winter
+    offered_summer-course.offered_summer
+    credit_hours-course.credit_hours
+    corequisites-course.corequisites 
     - JSON, appears as an array (i.e [101, MATH151])
     - HTTP status codes: 200 (Success), 404 (Not Found), 500 (Internal Server Error)
     
@@ -19,14 +25,38 @@ class MajorPlan(Resource):
     {
       "major_id": 1,
       "default_plan": {
+        "year0": {
+        "Past Coursework": []
+        }
         "year1": {
-          "Fall": [
-            [101, "MATH151"],
-            [103, "CMSC201"]
+          "Fall": []
+            {"id": 101,
+            "number": "MATH151",
+            "credit_hours": 4,
+            "offered_winter": false,
+            "offered_summer": true,
+            "prerequisites", [],
+            "corequisites", []
+            },
+            {"id": 103,
+            "number": "CMSC201",
+            "credit_hours": 4,
+            "offered_winter": false,
+            "offered_summer": true,
+            "prerequisites", [],
+            "corequisites", []
+            },
           ],
           "Winter": [],
           "Spring": [
-            [104, "CMSC202"]
+            {"id": 104,
+            "number": "CMSC202",
+            "offered_winter": false,
+            "offered_summer": true,
+            "credit_hours": 4,
+            "prerequisites", [103],
+            "corequisites", []
+            }
           ],
           "Summer": []
         },
@@ -50,27 +80,7 @@ class MajorPlan(Resource):
             default_plan_raw = major.get("default_plan")
             if not default_plan_raw:
                 return {"error": "No default plan available for major."}, 404
-            """
-            # Build a nested plan: Years 1-4 with sessions Fall, Winter, Spring, Summer
-            nested_plan = {
-                "year1":{"Fall": [], "Winter":[], "Spring":[], "Summer":[]},
-                "year2":{"Fall": [], "Winter":[], "Spring":[], "Summer":[]},
-                "year3":{"Fall": [], "Winter":[], "Spring":[], "Summer":[]},
-                "year4":{"Fall": [], "Winter":[], "Spring":[], "Summer":[]},
-            }
 
-            # For each course in the default plan, lookup course info and assign 
-            # a tuple (course_id, course_number)
-            for course_id_key, schedule in default_plan_raw.items():
-                course_id = int(course_id_key)
-                course = next((c for c in sample_data.courses if c['_id'] == course_id), None)
-
-                if course:
-                    year_key = f"year{schedule['year']}"
-                    session = schedule['session']
-                    if year_key in nested_plan and session in nested_plan[year_key]:
-                        nested_plan[year_key][session].append((course['_id'], course['number']))
-            """
             nested_plan = build_nested_plan(default_plan_raw)
             return {"major_id": major_id, "default_plan": nested_plan}, 200
         

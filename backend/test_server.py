@@ -14,7 +14,7 @@ def test_get_all_majors():
         assert type(res[0]) is dict
         assert type(res[1]) is dict
         assert res[0]["_id"] == 1
-        assert res[1]["name"] == "Mechanical Engineering Gateway"
+        assert res[1]["name"] == "Mechanical Engineering B.S."
 
     except (KeyError, TypeError, json.JSONDecodeError, AssertionError) as e:
         pytest.fail(f"Failed to process /api/v2/majors response: {e}")
@@ -109,5 +109,13 @@ def test_student_major(_id):
         pytest.fail(f"Failed to process /api/v2/students/{str(_id)}/major: {e}")
 
 
+@pytest.mark.parametrize("student_id", [i["_id"] for i in sample_data.students])
+def test_student_plan(student_id):
+    response = app.test_client().get(f'/api/v2/students/{str(student_id)}/plan')
 
-# def test_student_plan():
+    try:
+        assert response.status_code == 200
+        student_id = response.get_json().get("student_id") == student_id
+    
+    except (KeyError, TypeError, AssertionError, json.JSONDecodeError) as e:
+        pytest.fail(f"Failed to process /api/v2/students/{str(student_id)}/plan: {e}")

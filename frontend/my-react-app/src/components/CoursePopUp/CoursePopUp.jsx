@@ -73,4 +73,9 @@ const CoursePopUp = ({ courseId, onClose }) => {
   );
 };
 
+CoursePopUp.propTypes = {
+  courseId: PropTypes.number.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
+
 export default CoursePopUp;

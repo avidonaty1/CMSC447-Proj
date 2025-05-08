@@ -9,9 +9,10 @@ import "./DraggableCourse.css";
  * It uses the dnd-kit useDraggable hook to enable drag functionality.
  *  
  * Props:
- * - course (array, required): A tuple in the format [courseId, courseNumber]
- *   The courseId is used to build the draggable identifier.
- *   The courseNumber is displayed.
+ * - course (object, required): A course object with the id, number, credits, 
+ *   prequisites and corequistes attributes.
+ *   The course.id is used to build the draggable identifier.
+ *   The course.number and course.credit_hours are displayed.
  * - semester (string, required): A string representing the session (i.e. "year1-Fall")
  *   used as part of the draggable id.  
  * - onClick (function, required): A callback function invoked when the course is clicked
@@ -21,12 +22,10 @@ import "./DraggableCourse.css";
  */
 
 const DraggableCourse = ({ course, semester, onClick }) => {
-    // Course is expected to be a tuple: [courseId, courseNumber]
-
-
+    
     // Create an id in the format: "year-session-courseId"
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
-        id: `${semester}-${course[0]}`, 
+        id: `${semester}-${course.id}`, 
       });
     
     // Apply transformation style when dragging
@@ -43,8 +42,8 @@ const DraggableCourse = ({ course, semester, onClick }) => {
         {...attributes}
         onClick={onClick}
       >
-        {/* Display course number */}
-        {course[1]}
+        {/* Display course number and credits*/}
+        <div>{course.number} | Credits: {course.credit_hours}</div>
       </div>
     );
   };
@@ -52,7 +51,15 @@ const DraggableCourse = ({ course, semester, onClick }) => {
   
   // PropTypes for type safety
   DraggableCourse.propTypes = {
-    course: PropTypes.array.isRequired,
+    course: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      number: PropTypes.string.isRequired,
+      credit_hours: PropTypes.number.isRequired,
+      offered_winter: PropTypes.bool.isRequired,
+      offered_summer: PropTypes.bool.isRequired,
+      prerequisites: PropTypes.arrayOf(PropTypes.number).isRequired,
+      corequisites: PropTypes.arrayOf(PropTypes.number).isRequired,
+    }).isRequired, 
     semester: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
   };

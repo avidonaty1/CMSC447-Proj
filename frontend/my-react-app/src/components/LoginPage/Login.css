@@ -153,7 +153,7 @@ html{
     max-width: 550px; /* or whatever fits your layout */
     height: auto;
     aspect-ratio: 32 / 7; /* maintains your 32em by 7em ratio */
-    background-image: url("../src/assets/UMBC-primary-logo-RGB.png");
+    /* background-image: url("../src/assets/UMBC-primary-logo-RGB.png"); */
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

@@ -1,3 +1,4 @@
+
 from enum import Enum
 TITLE = "Simple Planner"
 
@@ -12,6 +13,7 @@ SOMETIMES = "Sometimes"
 class Major(Enum):
     CMSC = 1
     ENME = 2
+    CMPE_COMM = 3
 
 
 class Course(Enum):
@@ -59,6 +61,32 @@ class Course(Enum):
     GEPSOC2 = 142
     GEPSOC3 = 143
     GEPCUL2 = 144
+    CHEM101 = 145
+    CHEM102 = 146
+    CHEM102L = 147
+    ENME220 = 148
+    MATH251 = 149
+    ENME221 = 150
+    MATH225 = 151
+    ENME204 = 152
+    ENME217 = 153
+    CMPE306 = 154
+    ENME320 = 155
+    ENME303 = 156
+    ENME301 = 157
+    ENME304 = 158
+    ENME321 = 159
+    ENME360 = 160
+    ENME332L = 161
+    ENME403 = 162
+    ENME432L = 163
+    ENMETEC = 164
+    ENMESCI = 165
+    ENMEDES = 166
+    ENME482L = 167
+    ENME444 = 168
+    PHYS122 = 169
+
 
     def __str__(self):
         return self.name
@@ -175,7 +203,7 @@ courses = [
         dimensional analysis, and the engineering design process. Students must work in teams on a design project, 
         which includes design, construction, evaluation, testing, modeling and presentation. The course includes 
         an introduction to computer programming in MATLAB and to engineering ethics.""",
-        "credit_hours": 4,
+        "credit_hours": 3,
         "fills_up_quickly": ALWAYS,
         "offered_winter": False,
         "offered_summer": False,
@@ -470,7 +498,7 @@ courses = [
     },
     {
         "_id": Course.GEPANH1.value,
-        "number": "GEPARTH",
+        "number": "AH GEP ",
         "title": "Arts and Humanities GEP",
         "description": "Used to fulfill the Arts and Humanities GEP requirement.",
         "credit_hours": 3,
@@ -483,7 +511,7 @@ courses = [
     },
     {
         "_id": Course.GEPSOC1.value,
-        "number": "GEPSOCS",
+        "number": "SS GEP ",
         "title": "Social Sciences GEP",
         "description": "Used to fulfill the Social Sciences GEP requirement.",
         "credit_hours": 3,
@@ -497,7 +525,7 @@ courses = [
     {
         "_id": Course.GEPCUL1.value,
         "number": "GEPCULT",
-        "title": "Culture GEP",
+        "title": "C GEP  ",
         "description": "Used to fulfill the Culture GEP requirement.",
         "credit_hours": 3,
         "fills_up_quickly": RARELY,
@@ -522,7 +550,7 @@ courses = [
     },
     {
         "_id": Course.GEPLAN1.value,
-        "number": "GEPLAN1",
+        "number": "LANG101",
         "title": "Elementary Foreign Language I",
         "description": "101 level language course, required for GEP.",
         "credit_hours": 4,
@@ -535,7 +563,7 @@ courses = [
     },
     {
         "_id": Course.GEPLAN2.value,
-        "number": "GEPLAN2",
+        "number": "LANG102",
         "title": "Elementary Foreign Language II",
         "description": "102 level language course, required for GEP.",
         "credit_hours": 4,
@@ -548,7 +576,7 @@ courses = [
     },
     {
         "_id": Course.GEPLAN3.value,
-        "number": "GEPLAN3",
+        "number": "LANG201",
         "title": "Intermediate Foreign Language I",
         "description": "201 level language course, required for GEP.",
         "credit_hours": 4,
@@ -668,7 +696,7 @@ courses = [
     },
     {
         "_id": Course.GEPANH2.value,
-        "number": "GEPARTH",
+        "number": "AH GEP ",
         "title": "Arts and Humanities GEP",
         "description": "Used to fulfill the Arts and Humanities GEP requirement.",
         "credit_hours": 3,
@@ -681,7 +709,7 @@ courses = [
     },
     {
         "_id": Course.GEPANH3.value,
-        "number": "GEPARTH",
+        "number": "AH GEP ",
         "title": "Arts and Humanities GEP",
         "description": "Used to fulfill the Arts and Humanities GEP requirement.",
         "credit_hours": 3,
@@ -694,7 +722,7 @@ courses = [
     },
     {
         "_id": Course.GEPSOC2.value,
-        "number": "GEPSOCS",
+        "number": "SS GEP ",
         "title": "Social Sciences GEP",
         "description": "Used to fulfill the Social Sciences GEP requirement.",
         "credit_hours": 3,
@@ -707,7 +735,7 @@ courses = [
     },
     {
         "_id": Course.GEPSOC3.value,
-        "number": "GEPSOCS",
+        "number": "SS GEP ",
         "title": "Social Sciences GEP",
         "description": "Used to fulfill the Social Sciences GEP requirement.",
         "credit_hours": 3,
@@ -720,7 +748,7 @@ courses = [
     },
     {
         "_id": Course.GEPCUL2.value,
-        "number": "GEPCULT",
+        "number": "C GEP  ",
         "title": "Culture GEP",
         "description": "Used to fulfill the Culture GEP requirement.",
         "credit_hours": 3,
@@ -730,6 +758,379 @@ courses = [
         "prerequisites": [],
         "corequisites": [],
         "advisor_notes": "You may be able to use AP credits for this. Consult your advisor or check your degree audit.",
+    },
+    {
+        "_id": Course.CHEM101.value,
+        "number": "CHEM101",
+        "title": "Principles of Chemistry I",
+        "description": """An introduction to chemistry for science majors and other students who require a thorough grounding 
+        in the principles of chemistry. Topics treated include the atomic-molecular theory of matter, stoichiometry, states of 
+        matter, chemical nomenclature, energetics of chemical and physical processes, solutions, periodic properties, VSEPR, 
+        molecular orbital theory and chemistry of familiar elements. 
+        Note: Credit may not be obtained for both CHEM 101 and CHEM 123.""",
+        "credit_hours": 4,
+        "fills_up_quickly": ALWAYS,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [],
+        "corequisites": [],
+        "advisor_notes": "You must take MATH106 as a prerequisite, or more likely MATH151 (or test out of MATH).",
+    },
+    {
+        "_id": Course.CHEM102.value,
+        "number": "CHEM102",
+        "title": "Principles of Chemistry II",
+        "description": """Principles of chemical and physical equilibrium, liquids and solids, elementary thermodynamics, 
+        electron and proton transfer reactions, electrochemistry, chemical kinetics and a further study of the periodic 
+        properties of the elements. (Fall/Spring/Summer)""",
+        "credit_hours": 4,
+        "fills_up_quickly": ALWAYS,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.CHEM101.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.CHEM102L.value,
+        "number": "CHEM102L",
+        "title": "Introductory Chemistry Lab I",
+        "description": """Companion course to CHEM 102, intended for all students who require two or more years of 
+        chemistry. (Fall/Spring/Summer)""",
+        "credit_hours": 2,
+        "fills_up_quickly": ALWAYS,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.CHEM101.value],
+        "corequisites": [Course.CHEM102.value],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.MATH225.value,
+        "number": "MATH225",
+        "title": "Introduction to Differential Equations",
+        "description": """Topics of this course include solutions of first- and second order linear differential equations, 
+        non-linear exact and separable equations, integrating factors, homogeneous equations, higher-order linear equations, 
+        initial and boundary value problems, solutions as functions of the equation parameters, Laplace transforms, power 
+        series solutions for Bessel and Legendre equations, difference equations and numerical methods.""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.MATH152.value],
+        "corequisites": [],
+        "advisor_notes": "Recommended to take MATH251 first.",
+    },
+    {
+        "_id": Course.MATH251.value,
+        "number": "MATH251",
+        "title": "Multivariable Calculus",
+        "description": """Topics of this course include parametric and polar functions, vectors, lines, planes and surfaces 
+        in three dimensions, vector functions and their derivatives, partial derivatives, gradients, directional derivatives, 
+        maxima, minima, and Lagrange multipliers, multiple integrals, area, volume, surface area, integration in different 
+        coordinate systems, line integral, and the Green’s, Stokes, and divergence theorems. """,
+        "credit_hours": 4,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.MATH151.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.PHYS122.value,
+        "number": "PHYS122",
+        "title": "Introductory Physics II",
+        "description": """This is the second-semester introductory calculus-based physics course. Topics include thermodynamics, 
+        electricity, DC circuits, and magnetism. This course consists of lectures and discussions. (Fall/Spring)""",
+        "credit_hours": 4,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [Course.PHYS121.value],
+        "corequisites": [Course.MATH152.value],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.CMPE306.value,
+        "number": "CMPE306",
+        "title": "Introductory Circuit Theory",
+        "description": """This course introduces the fundamental linear passive elements of resistance, capacitance, inductance 
+        and the physical basis for their current voltage characteristics. It covers the basic analysis of circuits with these 
+        linear passive elements including Kirchoff’s laws, node and mesh analysis and a solution of the resulting circuit 
+        differential equations for transient and steady-state responses. The frequency domain description of circuit analysis 
+        is introduced. The operational amplifier and circuits using these components is covered. The basics of magnetic induction 
+        and transformers in linear circuits are discussed. The course includes a laboratory in which the student designs and makes 
+        measurements on simple test circuits using both real components and PSPICE simulation.""",
+        "credit_hours": 4,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [Course.PHYS122.value],
+        "corequisites": [Course.MATH225.value],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.ENME204.value,
+        "number": "ENME204",
+        "title": "Introduction to Engineering Design with CAD",
+        "description": """Sophomores are introduced to engineering design using the science and tools (CAD) of prior 
+        courses. The course will cover design specifications, design analysis, performance predictions, design, changes, 
+        final design and operation specifications. Students will be required to make written and oral presentations and 
+        produce a design report.""",
+        "credit_hours": 3,
+        "fills_up_quickly": ALWAYS,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.ENES101.value, Course.ENGL100.value, Course.ENME220.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.ENME217.value,
+        "number": "ENME217",
+        "title": "Engineering Thermodynamics",
+        "description": """Properties, characteristics and fundamental equations of state of materials, work and heat transfer. 
+        First and second laws of thermodynamics, thermodynamic power and refrigeration cycles, gas/vapor mixtures and psychrometrics.""",
+        "credit_hours": 3,
+        "fills_up_quickly": RARELY,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.ENME110.value, Course.MATH152.value, Course.PHYS121.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.ENME220.value,
+        "number": "ENME220",
+        "title": "Mechanics of Materials",
+        "description": """Mechanics of Materials is a fundamental course on the mechanical behavior of deformable bodies under 
+        axial loads, torsion, flexure, and combined loads. The concepts of stress, strain, and material properties are introduced 
+        and used to relate external forces with the resulting internal forces and deformation of a body. Practical applications 
+        involving the design of mechanical and structural elements under various load conditions are emphasized.""",
+        "credit_hours": 3,
+        "fills_up_quickly": RARELY,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.ENME110.value, Course.MATH152.value, Course.PHYS121.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.ENME221.value,
+        "number": "ENME221",
+        "title": "Dynamics",
+        "description": """Study of objects in motion. Objects are approximated first as particles and then as rigid bodies. 
+        In both cases, the kinematic relationships are derived first. Kinetics is studied from three perspectives: force-acceleration, 
+        work energy and impulse-momentum.""",
+        "credit_hours": 3,
+        "fills_up_quickly": RARELY,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.ENME110.value, Course.MATH152.value, Course.PHYS121.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.ENME301.value,
+        "number": "ENME301",
+        "title": "The Structure and Properties of Engineering Materials",
+        "description": """The nature and properties of engineering materials as related to their use in all phases of mechanical 
+        engineering will be studied. Materials covered include metals, ceramics and glasses, polymer and composites.""",
+        "credit_hours": 3,
+        "fills_up_quickly": RARELY,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.CHEM102.value, Course.CHEM102L.value, Course.ENME220.value, Course.PHYS122.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.ENME303.value,
+        "number": "ENME303",
+        "title": "Computational Methods for Engineers",
+        "description": """This course is an introduction to programming using MATLAB, elements of linear algebra, computational methods, 
+        and their application to solving engineering and specific problems through computational programming.""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.ENME220.value, Course.ENME221.value, Course.MATH225.value, Course.MATH251.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.ENME304.value,
+        "number": "ENME304",
+        "title": "Machine Design",
+        "description": """In-depth design course that is a follow-up to ENME 204. The focus here is on designing machine components. 
+        Emphasis is on kinematics, working stresses, repeated loadings, fatigue and heating effects. The course requires completion 
+        of a design project and the use of such computational tools as CAD and engineering codes.""",
+        "credit_hours": 3,
+        "fills_up_quickly": ALWAYS,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [Course.ENME204.value],
+        "corequisites": [],
+        "advisor_notes": "Major component of the course is a group project.",
+    },
+    {
+        "_id": Course.ENME320.value,
+        "number": "ENME320",
+        "title": "Fluid Mechanics",
+        "description": """Fluid flow concepts and basic equations, effects of viscosity and compressibility, dimensional analysis 
+        and laws of similarity, flow through pipes and over-immersed bodies, and principles of flow measurement.""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.ENME217.value, Course.ENME220.value, Course.ENME221.value, Course.MATH225.value, Course.MATH251.value],
+        "corequisites": [],
+        "advisor_notes": "Some students find this course very difficult.",
+    },
+    {
+        "_id": Course.ENME321.value,
+        "number": "ENME321",
+        "title": "Transfer Processes",
+        "description": """Conduction by steady state and transient heat flow; laminar and turbulent flow; free and forced convection; 
+        radiation, evaporation and condensation of vapors; and transfer of mass, heat and momentum.""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.ENME320.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.ENME332L.value,
+        "number": "ENME332L",
+        "title": "Solid Mechanics and Materials Laboratory",
+        "description": """TA laboratory course in testing mechanical properties of materials. Emphasis will be on experimental 
+        techniques in solid mechanics, strain gages, strain gage rosettes, photoelasticity, acoustic emissions, metallurgical and 
+        electron microscopy.""",
+        "credit_hours": 3,
+        "fills_up_quickly": ALWAYS,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.ENGL100.value, Course.ENME220.value, Course.ENME301.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.ENME360.value,
+        "number": "ENME360",
+        "title": "Vibrations",
+        "description": """Dynamic characteristics of machinery with emphasis on systems with single and multiple degrees of freedom.""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.ENME220.value, Course.ENME221.value, Course.ENME303.value, Course.MATH225.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.ENME403.value,
+        "number": "ENME403",
+        "title": "Automatic Controls",
+        "description": """Hydraulic, electrical, mechanical and pneumatic automatic control systems; open and closed loops; 
+        steady-state and transient operations; stability criteria; linear and non-linear systems; and Laplace transforms.""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.CMPE306.value],
+        "corequisites": [Course.ENME360.value],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.ENME432L.value,
+        "number": "ENME432L",
+        "title": "Fluids/Energy Laboratory",
+        "description": """Measurement of fluid properties, fluid forces and observation of flow phenomenon; demonstration of 
+        flow measurement techniques; and measurement of heat-transfer properties: conduction, convection and radiation; and 
+        condensation and evaporation measurements.""",
+        "credit_hours": 2,
+        "fills_up_quickly": ALWAYS,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.ENGL100.value, Course.ENME320.value, Course.ENME321.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.ENME444.value,
+        "number": "ENME444",
+        "title": "Mechanical Engineering Systems Design",
+        "description": """This course allows students completing the Mechanical Engineering curriculum to engage in a complete 
+        system design experience, integrating the various technical concepts they have learned in prior courses and is the last 
+        in a sequence of design courses that are an integral component of the undergraduate program. The course imparts a foundation 
+        in team leadership and project management and emphasizes entrepreneurial skills necessary to function in any organization, 
+        regardless of size. Engineers in industry solve problems that simultaneously resolve budgetary, time, technical and sometimes 
+        social, ethical and environmental constraints. Students will enjoy an experience that closely matches this environment.""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [Course.ENME360.value],
+        "corequisites": [],
+        "advisor_notes": "You must take all 300-level ENME required courses first. This is the capstone project course.",
+    },
+    {
+        "_id": Course.ENME482L.value,
+        "number": "ENME482L",
+        "title": "Vibrations/Controls Laboratory",
+        "description": """Methods and instrumentation for determining the vibration properties of mechanical systems. 
+        Various methods of spectral and modal analysis. Open-and closed-loop control experiments.""",
+        "credit_hours": 2,
+        "fills_up_quickly": RARELY,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [Course.ENME360.value, Course.ENME403.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.ENMEDES.value,
+        "number": "ENMEDES",
+        "title": "Mechanical Engineering 400-level Design Elective",
+        "description": """Check the course catalog and degree audit for acceptable courses.""",
+        "credit_hours": 3,
+        "fills_up_quickly": RARELY,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [],
+        "corequisites": [],
+        "advisor_notes": "Prerequisites will vary: generally at least one 300-level ENME course.",
+    },
+    {
+        "_id": Course.ENMETEC.value,
+        "number": "ENMETEC",
+        "title": "Mechanical Engineering 400-level Technical Elective",
+        "description": """Check the course catalog and degree audit for acceptable courses. ENME Design Electives
+        may also be used to fulfill this requirement.""",
+        "credit_hours": 3,
+        "fills_up_quickly": RARELY,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [],
+        "corequisites": [],
+        "advisor_notes": "Prerequisites will vary: generally at least one 200-level ENME course.",
+    },
+    {
+        "_id": Course.ENMESCI.value,
+        "number": "ENMESCI",
+        "title": "Mechanical Engineering science/Technical Elective",
+        "description": """Check the course catalog and degree audit for acceptable courses. ENME Design or Technical
+        Electives may also be used to fulfill this requirement.""",
+        "credit_hours": 3,
+        "fills_up_quickly": RARELY,
+        "offered_winter": False,
+        "offered_summer": True,
+        "prerequisites": [],
+        "corequisites": [],
+        "advisor_notes": "Prerequisites will vary. Courses may be outside the ENME discipline.",
     },
 ]
 
@@ -748,7 +1149,7 @@ majors = [
     {
         "_id": Major.CMSC.value,
         "name": "Computer Science B.S.",
-        "number_credits": 12,
+        "number_credits": 122,
         "default_plan": {
             Course.MATH151.value: {"year": 1, "session": "Fall"},
             Course.GEPLAN1.value: {"year": 1, "session": "Fall"},
@@ -793,13 +1194,95 @@ majors = [
     {
         "_id": Major.ENME.value,
         "name": "Mechanical Engineering B.S.",
-        "number_credits": 19,
+        "number_credits": 127,
+        "default_plan": {
+            Course.CHEM101.value: {"year": 1, "session": "Fall"},
+            Course.MATH151.value: {"year": 1, "session": "Fall"},
+            Course.ENES101.value: {"year": 1, "session": "Fall"},
+            Course.ENGL100.value: {"year": 1, "session": "Fall"},
+            Course.GEPANH1.value: {"year": 1, "session": "Fall"},
+            Course.CHEM102.value: {"year": 1, "session": "Spring"},
+            Course.CHEM102L.value: {"year": 1, "session": "Spring"},
+            Course.PHYS121.value: {"year": 1, "session": "Spring"},
+            Course.MATH152.value: {"year": 1, "session": "Spring"},
+            Course.ENME110.value: {"year": 1, "session": "Spring"},
+            Course.ENME220.value: {"year": 2, "session": "Fall"},
+            Course.STAT355.value: {"year": 2, "session": "Fall"},
+            Course.MATH251.value: {"year": 2, "session": "Fall"},
+            Course.PHYS122.value: {"year": 2, "session": "Fall"},
+            Course.GEPLAN1.value: {"year": 2, "session": "Fall"},
+            Course.ENME221.value: {"year": 2, "session": "Spring"},
+            Course.MATH225.value: {"year": 2, "session": "Spring"},
+            Course.ENME204.value: {"year": 2, "session": "Spring"},
+            Course.ENME217.value: {"year": 2, "session": "Spring"},
+            Course.GEPANH2.value: {"year": 2, "session": "Spring"},
+            Course.GEPLAN2.value: {"year": 2, "session": "Spring"}, 
+            Course.CMPE306.value: {"year": 3, "session": "Fall"},
+            Course.ENME320.value: {"year": 3, "session": "Fall"},
+            Course.ENME303.value: {"year": 3, "session": "Fall"},
+            Course.ENME301.value: {"year": 3, "session": "Fall"},
+            Course.GEPSOC1.value: {"year": 3, "session": "Fall"},
+            Course.ENME304.value: {"year": 3, "session": "Spring"},
+            Course.ENME321.value: {"year": 3, "session": "Spring"},
+            Course.ENME360.value: {"year": 3, "session": "Spring"},
+            Course.ENME332L.value: {"year": 3, "session": "Spring"}, 
+            Course.GEPLAN3.value: {"year": 3, "session": "Spring"},
+            Course.ENME403.value: {"year": 4, "session": "Fall"},
+            Course.ENME432L.value: {"year": 4, "session": "Fall"},
+            Course.ENMETEC.value: {"year": 4, "session": "Fall"},
+            Course.ENMESCI.value: {"year": 4, "session": "Fall"},
+            Course.GEPANH3.value: {"year": 4, "session": "Fall"},
+            Course.GEPSOC2.value: {"year": 4, "session": "Fall"},
+            Course.ENME482L.value: {"year": 4, "session": "Spring"},
+            Course.ENME444.value: {"year": 4, "session": "Spring"},
+            Course.ENMEDES.value: {"year": 4, "session": "Spring"},
+            Course.GEPSOC3.value: {"year": 4, "session": "Spring"}, 
+            Course.GEPCUL1.value: {"year": 4, "session": "Spring"},          
+        }
+    },
+        {
+        "_id": Major.CMPE_COMM.value,
+        "name": "Computer Engineering B.S., Communications Track",
+        "number_credits": 128,
         "default_plan": {
             Course.MATH151.value: {"year": 1, "session": "Fall"},
+            Course.GEPLAN1.value: {"year": 1, "session": "Fall"},
+            Course.ENGL100.value: {"year": 1, "session": "Fall"},
+            Course.CMSC201.value: {"year": 1, "session": "Fall"},
+            Course.CMSC202.value: {"year": 1, "session": "Spring"},
+            Course.CMSC203.value: {"year": 1, "session": "Spring"},
             Course.MATH152.value: {"year": 1, "session": "Spring"},
-            Course.PHYS121.value: {"year": 1, "session": "Fall"},
-            Course.ENES101.value: {"year": 1, "session": "Fall"},
-            Course.ENME110.value: {"year": 1, "session": "Spring"}
+            Course.GEPLAN2.value: {"year": 1, "session": "Spring"},
+            Course.CMSC331.value: {"year": 2, "session": "Fall"},
+            Course.CMSC341.value: {"year": 2, "session": "Fall"},
+            Course.SCISEQ1.value: {"year": 2, "session": "Fall"},
+            Course.GEPLAN3.value: {"year": 2, "session": "Fall"},
+            Course.FREEEL3.value: {"year": 2, "session": "Fall"},
+            Course.CMSC313.value: {"year": 2, "session": "Spring"},
+            Course.MATH221.value: {"year": 2, "session": "Spring"},
+            Course.SCISEQ2.value: {"year": 2, "session": "Spring"},
+            Course.SCILAB1.value: {"year": 2, "session": "Spring"}, 
+            Course.GEPANH1.value: {"year": 2, "session": "Spring"}, 
+            Course.CMSC304.value: {"year": 3, "session": "Fall"},
+            Course.CMSC411.value: {"year": 3, "session": "Fall"},
+            Course.CMSCEL1.value: {"year": 3, "session": "Fall"},
+            Course.STAT355.value: {"year": 3, "session": "Fall"},
+            Course.GEPSOC1.value: {"year": 3, "session": "Fall"},
+            Course.CMSC421.value: {"year": 3, "session": "Spring"},
+            Course.CMSCEL2.value: {"year": 3, "session": "Spring"},
+            Course.CMSCTC1.value: {"year": 3, "session": "Spring"},
+            Course.GEPANH2.value: {"year": 3, "session": "Spring"}, 
+            Course.GEPSOC2.value: {"year": 3, "session": "Spring"},
+            Course.CMSC441.value: {"year": 4, "session": "Fall"},
+            Course.CMSC447.value: {"year": 4, "session": "Fall"},
+            Course.GEPCUL1.value: {"year": 4, "session": "Fall"},
+            Course.GEPSOC3.value: {"year": 4, "session": "Fall"},
+            Course.GEPANH3.value: {"year": 4, "session": "Fall"},
+            Course.CMSCTC2.value: {"year": 4, "session": "Spring"},
+            Course.CMSCTC3.value: {"year": 4, "session": "Spring"},
+            Course.GEPCUL2.value: {"year": 4, "session": "Spring"},
+            Course.FREEEL1.value: {"year": 4, "session": "Spring"}, 
+            Course.FREEEL2.value: {"year": 4, "session": "Spring"},          
         }
     },
 ]

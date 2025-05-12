@@ -43,17 +43,17 @@ pip install virtualenv
 
 2. Run this command to create a virtual environment
 ```bash
-virtualenv planner-env
+virtualenv env
 ```
 
 3. Activate the virtual environment (Windows)
 ```bash
-planner-env\Scripts\activate
+env\Scripts\activate
 ```
 
 OR Activate the virtual environment (mac/Linux)
 ```bash
-source planner-env/bin/activate
+source env/bin/activate
 ```
 
 4. Run this command to install dependencies
@@ -103,6 +103,20 @@ npm run dev
 http://localhost:5173/ 
 
 
+## Running Backend tests
+
+Navigate to the backend folder
+
+Run this command
+
+```bash
+pytest test_server.py
+```
+
+## Running Frontend tests
+
+TO DOcod
+
 ## Troubleshooting
 
 You may need to run npm audit fix after running npm install.
@@ -110,10 +124,18 @@ You may need to run npm audit fix after running npm install.
 If the page does not load properly, ensure that the file paths are correct.
 Clear the browser cache if style updates are not reflecting.
 
-### Additional Information
+## Known Issues
 
-Refer to initial-setup.txt for further setup instructions or additional configuration details.
+If a major is reselected, sometimes the prerequisites array within course objects 
+gets mutated. The array should contain course id's (numbers) and it instead contains 
+course numbers (strings). This causes prerequite validation checks to fail. To diagnose, 
+check browser logs. To fix, restart both backend and frontend. 
 
+### In Progress Work
+
+Branches other than main have been retained for in-progress work.
+- mongoDB: integrating with the mongoDB database
+- chris: Adding years, printing the plan
 
 ## Contact
 

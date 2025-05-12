@@ -1,5 +1,0 @@
-Frontend - This is where the Javascript-based front end will be.
-We will create a react app (maybe?) in this directory.
-
-Backend - This is where the Django- and Python-based backend will be.
-We will create a django project in this directory.

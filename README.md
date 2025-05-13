@@ -115,7 +115,13 @@ pytest test_server.py
 
 ## Running Frontend tests
 
-TO DOcod
+Navigate to the my-react-app folder
+
+Run this command
+
+```bash
+npm run test
+```
 
 ## Troubleshooting
 

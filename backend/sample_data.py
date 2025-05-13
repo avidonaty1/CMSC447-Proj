@@ -538,8 +538,8 @@ courses = [
     },
     {
         "_id": Course.GEPCUL1.value,
-        "number": "GEPCULT",
-        "title": "C GEP  ",
+        "number": "C GEP  ",
+        "title": "Culture GEP",
         "description": "Used to fulfill the Culture GEP requirement.",
         "credit_hours": 3,
         "fills_up_quickly": RARELY,
@@ -1427,7 +1427,7 @@ majors = [
     {
         "_id": Major.ENME.value,
         "name": "Mechanical Engineering B.S.",
-        "number_credits": 127,
+        "number_credits": 134,
         "default_plan": {
             Course.CHEM101.value: {"year": 1, "session": "Fall"},
             Course.MATH151.value: {"year": 1, "session": "Fall"},
@@ -1476,7 +1476,7 @@ majors = [
         {
         "_id": Major.CMPE_COMM.value,
         "name": "Computer Engineering B.S., Communications Track",
-        "number_credits": 128,
+        "number_credits": 136,
         "default_plan": {
             Course.MATH151.value: {"year": 1, "session": "Fall"},
             Course.GEPLAN1.value: {"year": 1, "session": "Fall"},

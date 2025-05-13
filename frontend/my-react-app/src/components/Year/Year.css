@@ -8,8 +8,8 @@
 }
 
 .past-coursework-year {
-  background-color: lightgray;
-  border: 2px solid black;
+  background-color: white;
+  border: 2px solid lightgray;
   border-radius: 10px;
   padding: 15px;
 }
@@ -53,6 +53,11 @@
   width: 100%;
   margin: 0 auto;
 }
+
+/* .past-coursework-year{
+  background-color: red;
+} */
+
 
   /* On a narrower screen, force a 2-column grid */
   @media (max-width: 768px) {

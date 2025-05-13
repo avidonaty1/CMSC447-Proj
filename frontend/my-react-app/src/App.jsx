@@ -81,8 +81,8 @@ function App() {
         // Skip if logged in as Guest
         if (studentId === 0 || studentId === null) return;
         // Fetch student's major from API
-        // const response = await axios.get(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`);
-        const response = await axios.get(`api/v2/students/${studentId}/plan`);
+        const response = await axios.get(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`);
+        // const response = await axios.get(`api/v2/students/${studentId}/plan`);
         setMajorPlan(cloneDeep(response.data.custom_plan));
         setError(null);
         console.log("Fetched student's plan:", response.data.custom_plan);
@@ -112,10 +112,10 @@ function App() {
         };
 
         try {
-          // const response = await axios.post(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`, { custom_plan: emptyNestedPlan});
-          const response = await axios.post(`/api/v2/students/${studentId}/plan`, {
-            custom_plan: cloneDeep(emptyNestedPlan),
-          });
+          const response = await axios.post(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`, { custom_plan: emptyNestedPlan});
+          // const response = await axios.post(`/api/v2/students/${studentId}/plan`, {
+          //   custom_plan: cloneDeep(emptyNestedPlan),
+          // });
 
           console.log("Student's plan reset to empty nested plan:", response.data)
         } catch (error) {
@@ -163,10 +163,12 @@ function App() {
     // Update backend if user is a student
     if (studentId > 0) {
       try {
-        // const response = await axios.post(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`, { custom_plan: newPlan });
-        const response = await axios.post(`/api/v2/students/${studentId}/plan`, {
-          custom_plan: clonedNewPlan,
+        const response = await axios.post(`http://127.0.0.1:5000/api/v2/students/${studentId}/plan`, { 
+          custom_plan: clonedNewPlan 
         });
+        // const response = await axios.post(`/api/v2/students/${studentId}/plan`, {
+        //   custom_plan: clonedNewPlan,
+        // });
 
         console.log("Student's plan updated successfully:", response.data);
       } catch (error) {
@@ -188,8 +190,8 @@ function App() {
         // Fetch data from API endpoint
         console.log("Fetching plan for major:", selectedMajor);
 
-        // const response = await axios.get(`http://127.0.0.1:5000/api/v2/majors/${majorId}/plan`);
-        const response = await axios.get(`/api/v2/majors/${majorId}/plan`);
+        const response = await axios.get(`http://127.0.0.1:5000/api/v2/majors/${majorId}/plan`);
+        // const response = await axios.get(`/api/v2/majors/${majorId}/plan`);
         setMajorPlan(cloneDeep(response.data));
         setError(null);
         console.log("Fetched default plan");

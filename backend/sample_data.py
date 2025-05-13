@@ -823,7 +823,7 @@ students = [
     {
         "_id": 1001,
         "email": "cdollo1@umbc.edu",
-        "major_id": Major.ENME_GATEWAY.value,
+        "major_id": Major.ENME.value,
         "custom_plan": {}
     },
 ]

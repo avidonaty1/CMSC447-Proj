@@ -56,41 +56,6 @@ const getCoursesUpTo = (plan, targetYear, targetSession, includeTarget = false) 
 };
 
 
-<<<<<<< HEAD
-    try {
-      const response = await axios.get(`http://127.0.0.1:5000/api/v2/courses/${courseId}/requirements`);
-      // const response = await axios.get(`/api/v2/courses/${courseId}/requirements`);
-
-      // Cache and return the data
-      requirementsCache[courseId] = response.data;
-      return response.data;
-    } catch (err) {
-      console.error(`Error fetching requirements for course ${courseId}`, err);
-      // return null to indicate failure
-      requirementsCache[courseId] = null;
-      return null;
-    }
-   }
-
-
-  /**
-   * validateCourseDrop uses the getCourseRequirements helper to fetch prerequisites and corequisites
-   * for a given course, then check whether they are present.
-   * 
-   * @param {number} courseId - Id of the course being dropped
-   * @param {Array<number>} previousSessionCourseIds - All course IDs from previous sessions
-   * @param {Array{number}} currAndPrevSessionCourseIds - All course IDs up to / including target
-   * 
-   * @returns {Promise<boolean} - Resolves true if both requirements are met
-   */
-  async function validateCourseDrop(courseId, previousSessionCourseIds, currAndPrevSessionCourseIds) {
-    try {
-      // Fetch course requirements from API endpoint
-      const requirements = await getCourseRequirements(courseId);
-      if (!requirements) {
-        console.error(`Failed to retrieve requirements for course ${courseId}`);
-        return false;
-=======
 /**
  * validateCourseDrop checks whether corequisites and prerequisites for the
  * dropped course are present in the correct sequence.
@@ -118,7 +83,6 @@ async function validateCourseDrop(movedCourse, previousSessionCourses, currAndPr
           console.error(`Prerequisite ${reqId} for Course ${movedCourse.id} must also be in PastCoursework.`);
           return false;
         }
->>>>>>> d0133b76e7a1a8a2003869144a1fdf4d970d4b9c
       }
       // Corequisites must already be in year0
       for (const reqId of corequisites) {

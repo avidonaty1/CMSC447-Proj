@@ -86,6 +86,19 @@ class Course(Enum):
     ENME482L = 167
     ENME444 = 168
     PHYS122 = 169
+    CMPE310 = 170
+    CMPE311 = 171
+    CMPE314 = 172
+    CMPE320 = 173
+    CMPE349 = 174
+    CMPE450 = 175
+    CMPE451 = 176
+    CMPE323 = 177
+    CMPE330 = 178
+    CMPETC1 = 179
+    CMPETC2 = 180
+    CMPETC3 = 181
+    CMPE212 = 182
 
 
     def __str__(self):
@@ -324,9 +337,9 @@ courses = [
         "fills_up_quickly": SOMETIMES,
         "offered_winter": False,
         "offered_summer": True,
-        "prerequisites": [Course.CMSC313.value],
+        "prerequisites": [],
         "corequisites": [],
-        "advisor_notes": "None",
+        "advisor_notes": "Prerequisite is CMSC313 OR (CMPE212 and CMPE310)",
     },
     {
         "_id": Course.CMSC421.value,
@@ -340,9 +353,10 @@ courses = [
         "fills_up_quickly": SOMETIMES,
         "offered_winter": False,
         "offered_summer": True,
-        "prerequisites": [Course.CMSC341.value, Course.CMSC313.value],
+        "prerequisites": [Course.CMSC341.value],
         "corequisites": [],
-        "advisor_notes": "Recommended to NOT take this at the same time as CMSC441.",
+        "advisor_notes": """Second prerequisite is either CMSC313 or (CMPE212 and CMPE310). 
+        Recommended to NOT take this at the same time as CMSC441.""",
     },
     {
         "_id": Course.CMSC441.value,
@@ -1132,6 +1146,225 @@ courses = [
         "corequisites": [],
         "advisor_notes": "Prerequisites will vary. Courses may be outside the ENME discipline.",
     },
+    {
+        "_id": Course.CMPE310.value,
+        "number": "CMPE310",
+        "title": "Systems Design and Programming",
+        "description": """This course provides computer engineering students with system design software and hardware experience. 
+        This course covers hardware features that support advanced process and memory management in modern architectures such as 
+        the Pentium. The details of the entire chipset for 8086 are covered, including topics related to the register architecture, 
+        machine language, clock generator, bus controller and memory, I/O and interrupt interface. Other details of a complete 
+        computer system are discussed, including I/O bus protocols and support chips, memory chips, interrupt handler hardware 
+        and external support chips for disk storage, video and direct memory access. This course includes a laboratory that 
+        focuses on assembly language programming and board design software.""",
+        "credit_hours": 4,
+        "fills_up_quickly": ALWAYS,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [],
+        "corequisites": [Course.CMSC203.value],
+        "advisor_notes": "Prerequisite is CMPE Gateway. See course catalog for more details.",
+    },
+    {
+        "_id": Course.CMPE311.value,
+        "number": "CMPE311",
+        "title": "C Programming and Embedded Systems",
+        "description": """In this course, students learn about hardware and software aspects of embedded systems. Students 
+        learn C programming language through use in an embedded platform. The course builds on CMPE 310, introducing advanced 
+        topics including communication interfaces, advanced IO devices and other peripherals, multitasking, firmware, real-time 
+        operating systems/embedded operating systems and device drivers. The course will provide a hands-on experience in 
+        designing and programming an embedded system using a microcontroller-based development platform.""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [Course.CMPE310.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.CMPE314.value,
+        "number": "CMPE314",
+        "title": "Principles of Electronic Circuits",
+        "description": """A brief overview of semi-conductor devices and technology. The basic physical operation of PN-junction 
+        diodes, junction field effect transistors, MOSFETs and bipolar transistors. The corresponding small signal AC models. 
+        Basic transistor circuit configurations (CE, CC CB, CS, CD, CG). DC bias. Small signal analysis. Simple multi-transistor 
+        circuits: diffamp, operational amplifier and current mirror frequency response. In addition to the lectures, there is 
+        a laboratory associated with the course. You must have passed the Computer Engineering Gateway to get into this class.""",
+        "credit_hours": 4,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [Course.CMPE306.value, Course.MATH225.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.CMPE320.value,
+        "number": "CMPE320",
+        "title": "Probability, Statistics, and Random Processes",
+        "description": """This course presents the fundamental concepts of probability, statistics and random processes from a 
+        computer and electrical engineering perspective, emphasizing applications in communications, signal processing, and 
+        machine learning. Students will learn basic methods to analyze and model the probabilistic behavior of engineering 
+        systems and to analyze experimental data associated with such systems. A brief use-driven introduction of multivariate 
+        calculus concepts will be provided. (Spring)""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [Course.MATH152.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.CMPE349.value,
+        "number": "CMPE349",
+        "title": "Introduction to Professional Practice",
+        "description": """This course covers a wide range of professional practice topics, including basic systems engineering 
+        practices, basic project management, introduction to entrepreneurship, and professional ethics. The classroom environment 
+        simulates the professional/entrepreneurial workplace. Students are required to develop and write various technical documents, 
+        including project plans, specifications, and other professional documents. Professional practice experience includes 
+        real-world workplace ethics and behaviors. Note: Completion of the Computer Engineering Gateway required. This class is 
+        intended to be taken the semester before enrolling in CMPE 450.""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [Course.CMPE212.value, Course.CMSC201.value, Course.MATH151.value, Course.ENES101.value, Course.ENGL100.value,
+                          Course.PHYS121.value, Course.PHYS122.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.CMPE450.value,
+        "number": "CMPE450",
+        "title": "Capstone I",
+        "description": """This is the first half of a two-semester capstone experience, taken in consecutive Fall and Spring semesters. 
+        Students to engage in a complete project design experience over two semesters, integrating the technical concepts learned in 
+        prior courses. Entrepreneurship, team leadership and project management skills are emphasized. Students function in a 
+        classroom environment that closely simulates professional and entrepreneurial practice including budgetary, time, technical 
+        and sometimes social, ethical and environmental constraints. (Fall)""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [Course.CMPE314.value, Course.CMPE349.value, Course.CMSC341.value],
+        "corequisites": [Course.CMPE311.value],
+        "advisor_notes": "See course catalog for additional prerequisite information.",
+    },
+    {
+        "_id": Course.CMPE451.value,
+        "number": "CMPE451",
+        "title": "Capstone II",
+        "description": """This is the second half of a two-semester capstone experience, taken in consecutive Fall and Spring 
+        semesters. Students to engage in a complete project design experience over two semesters, integrating the technical 
+        concepts learned in prior courses. Entrepreneurship, team leadership and project management skills are emphasized. 
+        Students function in a classroom environment that closely simulates professional and entrepreneurial practice including 
+        budgetary, time, technical and sometimes social, ethical and environmental constraints.""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [Course.CMPE311.value, Course.CMPE450.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.CMPE323.value,
+        "number": "CMPE323",
+        "title": "Signal and Systems Theory",
+        "description": """This course covers basic linear signal and system theory from both continuous-time and discrete-time 
+        perspectives, covering linear, time-invariant systems, impulse response, Fourier Series and Transforms including the 
+        Discrete Fourier Transform and Fast Fourier Transform, transfer functions, discrete and continuous time filters, 
+        Laplace transforms and Z transforms. The course includes discussion and lab sections that focus on the use of MATLAB 
+        to solve and visualize problems that apply the theory discussed in lecture. Note: Completion of the Computer 
+        Engineering Gateway required. (Fall)""",
+        "credit_hours": 4,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [Course.PHYS121.value, Course.PHYS122.value, Course.CMPE212.value, Course.CMSC201.value, Course.MATH151.value,
+                          Course.CMPE306.value, Course.ENES101.value, Course.MATH225.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.CMPE330.value,
+        "number": "CMPE330",
+        "title": "Electromagnetic Waves and Transmission",
+        "description": """This course provides an introduction to waves, transmission lines, and electromagnetics with the focus 
+        on computer engineering and communications applications. The physical limits on Kirchoff’s Laws are discussed, along with 
+        the following topics: a review of phasor and vector quantities; transmission lines in the time domain and the frequency 
+        domain; electrostatics, magnetostatics, and the calculation of the capacitance and inductance in transmission lines;  
+        time-varying electromagnetic fields; the integral, differential, and phasor forms of Maxwell’s equations; plane waves 
+        and polarization effects, including transmission and reflection from surfaces; and an introduction to waveguides. 
+        Note: Completion of the Computer Engineering Gateway required.""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [Course.PHYS121.value, Course.PHYS122.value, Course.CMPE212.value, Course.CMSC201.value, Course.MATH151.value,
+                          Course.CMPE306.value, Course.ENES101.value, Course.MATH225.value],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
+    {
+        "_id": Course.CMPETC1.value,
+        "number": "CMPETC1",
+        "title": "Computer Engineering Technical Elective",
+        "description": """Check the course catalog and degree audit for acceptable courses. Options will depend on track.""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [],
+        "corequisites": [],
+        "advisor_notes": "Prerequisites will vary; generally requires at least one 300 level CMPE course.",
+    },
+    {
+        "_id": Course.CMPETC2.value,
+        "number": "CMPETC2",
+        "title": "Computer Engineering Technical Elective",
+        "description": """Check the course catalog and degree audit for acceptable courses. Options will depend on track.""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [],
+        "corequisites": [],
+        "advisor_notes": "Prerequisites will vary; generally requires at least one 300 level CMPE course.",
+    },
+    {
+        "_id": Course.CMPETC3.value,
+        "number": "CMPETC3",
+        "title": "Computer Engineering Technical Elective",
+        "description": """Check the course catalog and degree audit for acceptable courses. Options will depend on track.""",
+        "credit_hours": 3,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [],
+        "corequisites": [],
+        "advisor_notes": "Prerequisites will vary; generally requires at least one 300 level CMPE course.",
+    },
+    {
+        "_id": Course.CMPE212.value,
+        "number": "CMPE212",
+        "title": "Principles of Digital Design",
+        "description": """This course introduces students to the science of digital design. The topics covered include 
+        Boolean algebra; logic theorems; logic circuits and methods for their simplification, including Karnaugh maps 
+        and the Quine-McCluskey algorithm; combinational design; electrical characteristics of gates, timing, races and 
+        hazards; sequential circuits, their specification via state machines and minimization; principles of register 
+        transfer notation; exposure to hardware description language(s); and synthesis tools. This course 
+        includes a laboratory.""",
+        "credit_hours": 4,
+        "fills_up_quickly": SOMETIMES,
+        "offered_winter": False,
+        "offered_summer": False,
+        "prerequisites": [],
+        "corequisites": [],
+        "advisor_notes": "None",
+    },
 ]
 
 # Define the majors collection
@@ -1249,40 +1482,42 @@ majors = [
             Course.GEPLAN1.value: {"year": 1, "session": "Fall"},
             Course.ENGL100.value: {"year": 1, "session": "Fall"},
             Course.CMSC201.value: {"year": 1, "session": "Fall"},
+            Course.PHYS121.value: {"year": 1, "session": "Fall"},
             Course.CMSC202.value: {"year": 1, "session": "Spring"},
-            Course.CMSC203.value: {"year": 1, "session": "Spring"},
+            Course.CMPE212.value: {"year": 1, "session": "Spring"},
             Course.MATH152.value: {"year": 1, "session": "Spring"},
+            Course.ENES101.value: {"year": 1, "session": "Spring"},
             Course.GEPLAN2.value: {"year": 1, "session": "Spring"},
-            Course.CMSC331.value: {"year": 2, "session": "Fall"},
-            Course.CMSC341.value: {"year": 2, "session": "Fall"},
-            Course.SCISEQ1.value: {"year": 2, "session": "Fall"},
-            Course.GEPLAN3.value: {"year": 2, "session": "Fall"},
-            Course.FREEEL3.value: {"year": 2, "session": "Fall"},
-            Course.CMSC313.value: {"year": 2, "session": "Spring"},
-            Course.MATH221.value: {"year": 2, "session": "Spring"},
-            Course.SCISEQ2.value: {"year": 2, "session": "Spring"},
-            Course.SCILAB1.value: {"year": 2, "session": "Spring"}, 
-            Course.GEPANH1.value: {"year": 2, "session": "Spring"}, 
-            Course.CMSC304.value: {"year": 3, "session": "Fall"},
-            Course.CMSC411.value: {"year": 3, "session": "Fall"},
-            Course.CMSCEL1.value: {"year": 3, "session": "Fall"},
-            Course.STAT355.value: {"year": 3, "session": "Fall"},
-            Course.GEPSOC1.value: {"year": 3, "session": "Fall"},
-            Course.CMSC421.value: {"year": 3, "session": "Spring"},
-            Course.CMSCEL2.value: {"year": 3, "session": "Spring"},
-            Course.CMSCTC1.value: {"year": 3, "session": "Spring"},
+            Course.MATH251.value: {"year": 2, "session": "Fall"},
+            Course.CMSC203.value: {"year": 2, "session": "Fall"},
+            Course.PHYS122.value: {"year": 2, "session": "Fall"},
+            Course.GEPANH1.value: {"year": 2, "session": "Fall"},
+            Course.GEPSOC1.value: {"year": 2, "session": "Fall"},
+            Course.CMPE306.value: {"year": 2, "session": "Spring"},
+            Course.MATH225.value: {"year": 2, "session": "Spring"},
+            Course.CMPE310.value: {"year": 2, "session": "Spring"},
+            Course.CMSC341.value: {"year": 2, "session": "Spring"}, 
+            Course.CMPE314.value: {"year": 3, "session": "Fall"},
+            Course.CMPE311.value: {"year": 3, "session": "Fall"},
+            Course.CMPE323.value: {"year": 3, "session": "Fall"},
+            Course.MATH221.value: {"year": 3, "session": "Fall"},
+            Course.SCISEQ1.value: {"year": 3, "session": "Fall"},
+            Course.CMPE320.value: {"year": 3, "session": "Spring"},
+            Course.CMPE330.value: {"year": 3, "session": "Spring"},
+            Course.CMPE349.value: {"year": 3, "session": "Spring"},
             Course.GEPANH2.value: {"year": 3, "session": "Spring"}, 
-            Course.GEPSOC2.value: {"year": 3, "session": "Spring"},
-            Course.CMSC441.value: {"year": 4, "session": "Fall"},
-            Course.CMSC447.value: {"year": 4, "session": "Fall"},
-            Course.GEPCUL1.value: {"year": 4, "session": "Fall"},
-            Course.GEPSOC3.value: {"year": 4, "session": "Fall"},
+            Course.GEPCUL1.value: {"year": 3, "session": "Spring"},
+            Course.CMSC411.value: {"year": 4, "session": "Fall"},
+            Course.CMPE450.value: {"year": 4, "session": "Fall"},
+            Course.CMPETC1.value: {"year": 4, "session": "Fall"},
+            Course.CMPETC2.value: {"year": 4, "session": "Fall"},
             Course.GEPANH3.value: {"year": 4, "session": "Fall"},
-            Course.CMSCTC2.value: {"year": 4, "session": "Spring"},
-            Course.CMSCTC3.value: {"year": 4, "session": "Spring"},
-            Course.GEPCUL2.value: {"year": 4, "session": "Spring"},
-            Course.FREEEL1.value: {"year": 4, "session": "Spring"}, 
-            Course.FREEEL2.value: {"year": 4, "session": "Spring"},          
+            Course.GEPSOC2.value: {"year": 4, "session": "Fall"},
+            Course.CMSC421.value: {"year": 4, "session": "Spring"},
+            Course.CMPE451.value: {"year": 4, "session": "Spring"},
+            Course.CMPETC3.value: {"year": 4, "session": "Spring"},
+            Course.GEPLAN3.value: {"year": 4, "session": "Spring"}, 
+            Course.GEPSOC3.value: {"year": 4, "session": "Spring"},          
         }
     },
 ]

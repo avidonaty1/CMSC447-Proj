@@ -1,3 +1,4 @@
+import React from "react"; // This is needed for tests
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -14,7 +15,7 @@ import './SearchMajor.css'
  *  (Receives the selected major object as an argument)
  */
 
-const SearchMajor = ({ onMajorSelect}) => {
+const SearchMajor = ({ onMajorSelect }) => {
   // State to manage the list of majors
   const [majors, setMajors] = useState([]);
 
@@ -38,15 +39,14 @@ const SearchMajor = ({ onMajorSelect}) => {
         console.log("Majors fetched:", response.data);
         setLoading(false);
       } catch (err) {
-          console.error("Error fetching majors:", err);
-          setError(`Failed to load majors. Error: ${err.message}`);
-          setLoading(false);
+        console.error("Error fetching majors:", err);
+        setError(`Failed to load majors. Error: ${err.message}`);
+        setLoading(false);
       }
     };
-
-    // Trigger data fetching
     fetchMajors();
   }, []);
+
 
   /**
    * Handle dropdown selection and trigger the onMajorSelect callback
@@ -82,17 +82,17 @@ const SearchMajor = ({ onMajorSelect}) => {
 
   return (
     <div className="select-major">
-      <label className="select-major-text" htmlFor="major">Select a major:</label>
+      <label className="select-major-text" htmlFor="major-dropdown">Select a major:</label>
       {/* Dropdown menu to allow the user to select a major" */}
-      <select id="major-dropdown" onChange={handleChange}>
-         <option value="">--Choose a Major--</option>
+      <select id="major-dropdown" onChange={handleChange} aria-labelledby="major-dropdown">
+        <option value="">--Choose a Major--</option>
 
-         {/* Dynamically render options based on the majors array */}
-         {majors.map((major) => (
+        {/* Dynamically render options based on the majors array */}
+        {majors.map((major) => (
           <option key={major._id} value={major._id}>
             {major.name}
           </option>
-         ))}
+        ))}
       </select>
     </div>
   );

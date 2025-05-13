@@ -35,9 +35,7 @@
   width: 100%;
 }
 .past-coursework-sessions {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  width: 25%;
   gap: 15px;
   justify-items: center;
 }

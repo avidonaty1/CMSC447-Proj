@@ -1,14 +1,12 @@
-function instructions(){
+function Instructions(){
     return(
 
         <p className="instructions">
-            Use the four-year academic pathways for each UMBC major/program listed below as a resource for major exploration and 
-            development of an individualized degree plan. Please note that these 
-            academic pathways  are sample pathways.  Students, in consultation with their academic advisor, 
-            will create an individualized degree plan, reflecting their academic preparation, interests and goals.
-            Students are strongly encouraged to develop an individualized degree plan by  no later than 45 credits earned 
-            and to update the plan regularly,
-            in consultation with an academic advisor.
+            1. Select a major to start a graduation plan. <br /> 
+            2. Drag and drop courses to customize the schedule. <br />
+            3. Click on a course to view more information. <br />
+            Note that this tool is for reference only. It is not a replacement for the Degree Audit,
+            PeopleSoft, or speaking with your advisor.
 
             <br />For complete information on degree requirements, reference the <a href="https://catalog.umbc.edu/">Undergraduate Course Catalog</a>.
         </p>
@@ -16,4 +14,4 @@ function instructions(){
     ) 
 }
 
-export default instructions
+export default Instructions;

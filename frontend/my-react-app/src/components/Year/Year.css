@@ -1,0 +1,72 @@
+.schedule-year{
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 50px;  
+}
+
+.past-coursework-year {
+  background-color: lightgray;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.schedule-year-title{
+  width: 95%;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 600;
+  color: #000;
+  background-color: white;
+  padding: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  border: 2px solid wheat;
+}
+
+.schedule-sessions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+}
+.past-coursework-sessions {
+  width: 25%;
+  gap: 15px;
+  justify-items: center;
+}
+
+.past-coursework-sessions .session {
+  width: 100%;
+}
+.past-coursework-sessions .session-courses {
+  gap: 8px;
+}
+
+.past-coursework-sessions .course {
+  width: 100%;
+  margin: 0 auto;
+}
+
+  /* On a narrower screen, force a 2-column grid */
+  @media (max-width: 768px) {
+    .schedule-sessions {
+      display: grid;
+      grid-template-columns: repeat(2, calc(8ch + 60px));
+      gap: 10px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .past-coursework-sessions {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .past-coursework-sessions .draggable-course {
+      max-width: 100%;
+    }
+  }
